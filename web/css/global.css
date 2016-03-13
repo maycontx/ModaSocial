@@ -3,7 +3,7 @@
     padding-right: 0;
 }
 
-.btn, input{
+.btn, input, select, textarea{
     border-radius: 0 !important;
 }
 

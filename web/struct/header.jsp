@@ -1,9 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid header-up">
     <div class="container">
-        <c:if test="${user != null}">
-            Painel de Controle |
-        </c:if>
+        <a href="admin-panel">Painel de Controle</a> |
         FAQ | Contato
     </div>
     <div class="menu">

@@ -1,0 +1,83 @@
+.top-menu{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #333333;
+    color: #ffffff;
+    z-index: 999999;
+    height: 40px;
+}
+
+.fix-menu{
+    position: fixed;
+    top: 40px;
+    left: 0;
+    height: 100%;
+    width: 140px;
+    background-color: #333333;
+    z-index: 999998;
+    color: #ffffff;
+}
+
+.fix-menu .fix-item{
+    padding: 10px;
+    background: #444444;
+    cursor: pointer;    
+}
+
+.fix-menu .fix-item a{
+    color: inherit;
+}
+
+.fix-menu .fix-item:hover{
+    background: #555555;
+}
+
+.fix-menu .fix-item a:hover{
+    text-decoration: none;
+}
+
+/* CONTENT */
+.admin-content{
+    margin-left: 160px;
+    margin-top: 20px;
+    width: 85%;   
+    padding: 5px;
+}
+
+/* PRODUCT */
+.product-header{
+    float: left;
+    width: 100%;
+}
+
+.product-header .page-header small{
+    float: right;
+}
+
+.product-header .form-row{
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+}
+
+.product-header .form-row label{
+    font-size: 11px;
+    margin-top: 10px;
+}
+
+.product-body{
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.product-body .table-hover tr td span{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.product-body .table-hover tr td .glyphicon-trash{
+    color: #960808;
+}

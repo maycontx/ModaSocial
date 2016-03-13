@@ -28,7 +28,7 @@
                             <input class="form-control" type="password" name="reg-pass" placeholder="Senha">
                         </div>
                     </div>
-                    <div class="form-row">               
+                    <div class="form-row">  
                         <input type="button" class="btn btn-default" value="Fechar" data-id="hide-modal">  
                         <input type="submit" class="btn btn-primary" value="Cadastrar">                    
                     </div>

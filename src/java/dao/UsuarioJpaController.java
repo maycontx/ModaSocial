@@ -416,4 +416,18 @@ public class UsuarioJpaController implements Serializable {
         }
     }
     
+    public Usuario findUsuarioByEmail(Usuario user) {
+        
+        String query = "SELECT u FROM Usuario u WHERE u.email = :email ";
+        
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("email", user.getEmail()); 
+        
+        try{
+            return (Usuario) q.getSingleResult();
+        }catch(Exception ex){
+            return null;
+        }
+    }
+    
 }

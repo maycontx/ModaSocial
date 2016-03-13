@@ -1,6 +1,7 @@
 package controller;
 
 import dao.UsuarioJpaController;
+import helper.Session;
 import helper.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +43,7 @@ public class RegisterController extends HttpServlet {
         if (!Validation.validarCadastro(user)) {
             if (!Validation.verificarUsuarioJaCadastrado(user)) {
                 new UsuarioJpaController(emf).create(user);
-                request.setAttribute("user", user);
+                Session.login(user.getEmail(), user.getSenha(), request);
             } else {
                 request.setAttribute("mensagemErro", "Usuario ja cadastrado!");
             }

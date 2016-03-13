@@ -41,5 +41,35 @@ public class Session {
         }
 
     }
+    
+    public static Usuario criarCookie(boolean keep, String email, String senha, 
+            HttpServletResponse response, HttpServletRequest request) {
+
+        Usuario user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
+        if (user != null) {
+            Cookie cookieLogin = new Cookie("ModaSocialLogin", user.getEmail());
+            if (keep) {
+                cookieLogin.setMaxAge(60 * 60 * 24 * 360);
+            } else {
+                cookieLogin.setMaxAge(-1);
+            }
+            response.addCookie(cookieLogin);
+        }
+        return login(email, senha, request);
+    }
+    
+    public static String recuperarCookie(HttpServletRequest request) {
+
+        String login = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("ModaSocialLogin")) {
+                    login = c.getValue();
+                }
+            }
+        }
+        return login;
+    }
 
 }

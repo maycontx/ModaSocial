@@ -43,7 +43,7 @@ public class RegisterController extends HttpServlet {
         if (!Validation.validarCadastro(user)) {
             if (!Validation.verificarUsuarioJaCadastrado(user)) {
                 new UsuarioJpaController(emf).create(user);
-                Session.login(user.getEmail(), user.getSenha(), request);
+                Session.criarCookie(false, user.getEmail(), user.getSenha(), response, request);
             } else {
                 request.setAttribute("mensagemErro", "Usuario ja cadastrado!");
             }

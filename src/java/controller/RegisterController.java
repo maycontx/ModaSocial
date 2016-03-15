@@ -21,9 +21,9 @@ public class RegisterController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+                   
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
-
+        
         String name = request.getParameter("reg-name");
         String aftername = request.getParameter("reg-aftername");
         String email = request.getParameter("reg-email");

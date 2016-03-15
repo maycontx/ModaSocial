@@ -85,7 +85,9 @@ public class Produto implements Serializable {
     private Fornecedor fornecedor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
     private List<RelProdutoPromocao> relProdutoPromocaoList;
-
+    
+    private EntityManagerFactory emf; 
+    
     public Produto() {
     }
 
@@ -102,8 +104,12 @@ public class Produto implements Serializable {
         this.estoque = estoque;
     }
     
-    public List<Produto> findSortProdutos(EntityManagerFactory emf){
+    public List<Produto> getSortProdutos(EntityManagerFactory emf){
         return new ProdutoJpaController(emf).findSortProdutos();
+    }
+    
+    public List<Produto> getRelated(EntityManagerFactory emf){
+        return new ProdutoJpaController(emf).findRelated(this);
     }
 
     public Integer getIdproduto() {

@@ -481,20 +481,48 @@ public class ProdutoJpaController implements Serializable {
 
         Query q = getEntityManager().createQuery(query);
         try {
-            
-            int posicaoInicial = q.getResultList().size();
+
+            int initialPosition = q.getResultList().size();
             Random r = new Random();
-            if(q.getResultList().size() >= 24){
-                posicaoInicial = r.nextInt(q.getResultList().size() - 12);
-            }else{
-                posicaoInicial = 0;
+            if (q.getResultList().size() >= 24) {
+                initialPosition = r.nextInt(q.getResultList().size() - 12);
+            } else {
+                initialPosition = 0;
             }
             q.setMaxResults(12);
-            q.setFirstResult(posicaoInicial);
-            
+            q.setFirstResult(initialPosition);
+
             List<Produto> sort = q.getResultList();
             Collections.shuffle(sort);
-            
+
+            return sort;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<Produto> findRelated(Produto product) {
+        String query = "SELECT p FROM Produto p WHERE p.categoria = :categoria "
+                + " and p.idproduto != :id";
+
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("categoria", product.getCategoria());
+        q.setParameter("id", product.getIdproduto());
+        try {
+
+            int initialPosition = q.getResultList().size();
+            Random r = new Random();
+            if (q.getResultList().size() >= 16) {
+                initialPosition = r.nextInt(q.getResultList().size() - 8);
+            } else {
+                initialPosition = 0;
+            }
+            q.setMaxResults(8);
+            q.setFirstResult(initialPosition);
+
+            List<Produto> sort = q.getResultList();
+            Collections.shuffle(sort);
+
             return sort;
         } catch (Exception ex) {
             return null;

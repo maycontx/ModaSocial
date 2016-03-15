@@ -18,39 +18,39 @@ public class Validation {
     
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
 
-    public static boolean validarCadastro(Usuario usuario) {
+    public static boolean validationRegister(Usuario user) {
 
-        boolean temErro = false;
+        boolean error = false;
 
-        if (usuario.getNome().equals("")
-                || usuario.getNome().trim().length() < 3
-                || usuario.getNome().trim().length() > 20) {
-            temErro = true;
+        if (user.getNome().equals("")
+                || user.getNome().trim().length() < 3
+                || user.getNome().trim().length() > 20) {
+            error = true;
         }
 
-        if (usuario.getSobrenome().equals("")
-                || usuario.getSobrenome().trim().length() < 3
-                || usuario.getSobrenome().trim().length() > 20) {
-            temErro = true;
+        if (user.getSobrenome().equals("")
+                || user.getSobrenome().trim().length() < 3
+                || user.getSobrenome().trim().length() > 20) {
+            error = true;
         }
 
-        if (usuario.getEmail().equals("")) {
-            temErro = true;
+        if (user.getEmail().equals("")) {
+            error = true;
         } else {
             String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-            boolean ok = usuario.getEmail().matches(regex);
+            boolean ok = user.getEmail().matches(regex);
             if (!ok) {
-                temErro = true;
+                error = true;
             }
         }
 
-        if (usuario.getSenha().trim().length() < 6) {
-            temErro = true;
+        if (user.getSenha().trim().length() < 6) {
+            error = true;
         }
-        return temErro;
+        return error;
     }
     
-    public static boolean verificarUsuarioJaCadastrado(Usuario usuario){
+    public static boolean checksUserRegister(Usuario usuario){
         
         Usuario user = new UsuarioJpaController(emf).findUsuarioByEmail(usuario);
         

@@ -42,7 +42,7 @@ public class Session {
 
     }
     
-    public static Usuario criarCookie(boolean keep, String email, String senha, 
+    public static Usuario createCookie(boolean keep, String email, String senha, 
             HttpServletResponse response, HttpServletRequest request) {
 
         Usuario user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
@@ -58,7 +58,7 @@ public class Session {
         return login(email, senha, request);
     }
     
-    public static String recuperarCookie(HttpServletRequest request) {
+    public static String findCookie(HttpServletRequest request) {
 
         String login = null;
         Cookie[] cookies = request.getCookies();

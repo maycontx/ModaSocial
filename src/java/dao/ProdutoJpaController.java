@@ -16,7 +16,9 @@ import model.Categoria;
 import model.Fornecedor;
 import model.Caracteristica;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import model.ImagemProduto;
@@ -473,5 +475,30 @@ public class ProdutoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Produto> findSortProdutos() {
+        String query = "SELECT p FROM Produto p";
+
+        Query q = getEntityManager().createQuery(query);
+        try {
+            
+            int posicaoInicial = q.getResultList().size();
+            Random r = new Random();
+            if(q.getResultList().size() >= 24){
+                posicaoInicial = r.nextInt(q.getResultList().size() - 12);
+            }else{
+                posicaoInicial = 0;
+            }
+            q.setMaxResults(12);
+            q.setFirstResult(posicaoInicial);
+            
+            List<Produto> sort = q.getResultList();
+            Collections.shuffle(sort);
+            
+            return sort;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ import dao.UsuarioJpaController;
 import helper.Session;
 import helper.Validation;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -37,13 +36,13 @@ public class RegisterController extends HttpServlet {
         user.setSenha(password);
         user.setCredito(BigDecimal.ZERO);
         user.setPermissao("Cliente");
-
+               
         RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
 
-        if (!Validation.validarCadastro(user)) {
-            if (!Validation.verificarUsuarioJaCadastrado(user)) {
+        if (!Validation.validationRegister(user)) {
+            if (!Validation.checksUserRegister(user)) {
                 new UsuarioJpaController(emf).create(user);
-                Session.criarCookie(false, user.getEmail(), user.getSenha(), response, request);
+                Session.createCookie(false, user.getEmail(), user.getSenha(), response, request);
             } else {
                 request.setAttribute("mensagemErro", "Usuario ja cadastrado!");
             }

@@ -21,7 +21,7 @@ public class Session {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
 
-    public static Usuario login(String email, String senha, HttpServletRequest request) {
+    private static Usuario login(String email, String senha, HttpServletRequest request) {
 
         Usuario user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
         if (user != null) {

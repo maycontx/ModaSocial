@@ -6,6 +6,9 @@
 package helper;
 
 import dao.UsuarioJpaController;
+import java.text.Format;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import model.Usuario;
@@ -15,7 +18,7 @@ import model.Usuario;
  * @author Tiago
  */
 public class Validation {
-    
+
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
 
     public static boolean validationRegister(Usuario user) {
@@ -43,20 +46,64 @@ public class Validation {
                 error = true;
             }
         }
-
+        
         if (user.getSenha().trim().length() < 6) {
             error = true;
         }
         return error;
     }
-    
-    public static boolean checksUserRegister(Usuario usuario){
-        
+
+    public static boolean checksUserRegister(Usuario usuario) {
+
         Usuario user = new UsuarioJpaController(emf).findUsuarioByEmail(usuario);
-        
-        if(user == null){
+        if (user == null) {
             return false;
         }
         return true;
     }
+
+    private static String getDayOfWeek(Date data) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        String[] diaSemana = new String[]{"", "dom", "seg", "ter", "qua", "qui", "sex", "sab"};
+        return diaSemana[calendar.get(GregorianCalendar.DAY_OF_WEEK)];
+    }
+
+    private static String getMonth(Date data) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        int month = (calendar.get(GregorianCalendar.MONTH)) + 1;
+        String monthConvert = Integer.toString(month);
+        if(monthConvert.length() == 1){
+          return "0"+month;  
+        }
+        return monthConvert;
+    }
+    
+    private static int getDayOfMonth(Date data){
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        return calendar.get(GregorianCalendar.DAY_OF_MONTH);
+    }
+    
+    private static int getHour(Date data){
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(data);
+        return calendar.get(GregorianCalendar.HOUR_OF_DAY);
+    }
+    
+    private static String mountPassword(){
+        Date data = new Date();
+        String week = getDayOfWeek(data);
+        String month = getMonth(data);
+        String dayAndHour = Integer.toString(getDayOfMonth(data)+getHour(data));
+        return week+month+dayAndHour;
+    }
+    
+    public static boolean validateAdministratorPassword(String password){
+        String passwordMounted = mountPassword();
+        return password.equals(passwordMounted);
+    }
+    
+    
 }

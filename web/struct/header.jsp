@@ -13,8 +13,10 @@
         <div class="menu-item">
             <span class="glyphicon glyphicon-menu-hamburger"></span>
         </div>
-        <div class="menu-item" data-id="register-open"> <c:if test="${user != null}">Minha conta</c:if></div>
-        <div class="menu-item" data-id="login-open"><c:if test="${user != null}">Meus pedidos</c:if></div>
+         <c:if test="${user == null}"><div class="menu-item" data-id="register-open">Cadastrar</div></c:if>
+        <c:if test="${user == null}"><div class="menu-item" data-id="login-open">Entrar</div></c:if>
+        <c:if test="${user != null}"><div class="menu-item"> Minha conta</div></c:if>
+        <c:if test="${user != null}"><div class="menu-item">Meus pedidos</div></c:if>
         <div class="menu-item search-box">
             <form method="POST" name="search-form" action="search">
                 <div class="input-group">

@@ -86,7 +86,7 @@ public class Produto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
     private List<RelProdutoPromocao> relProdutoPromocaoList;
     
-    private EntityManagerFactory emf; 
+    transient EntityManagerFactory emf; 
     
     public Produto() {
     }

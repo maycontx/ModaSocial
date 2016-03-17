@@ -12,12 +12,21 @@ var fade = {
     }
 };
 
+var loginForm = {
+    show: function(btn){
+        var id = btn.attr("data-id");
+        var component = $("div[data-reactid='" + id + "']");
+        fade.show();
+        component.slideDown();        
+    }
+};
+
 var registerForm = {
     show: function(btn){
         var id = btn.attr("data-id");
         var component = $("div[data-reactid='" + id + "']");
         fade.show();
-        component.show();
+        component.slideDown();   
         
     }
 };

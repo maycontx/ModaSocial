@@ -81,6 +81,10 @@
     border-bottom: 1px dotted #777;
 }
 
+.product .product-img .product-info .info-header span{
+    float: right;
+}
+
 .product .product-img .product-info .info-body{
     padding: 5px;
     margin-bottom: 41px;

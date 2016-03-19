@@ -1,12 +1,20 @@
 package controller;
 
+import dao.BuscaJpaController;
+import helper.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Busca;
+import model.Usuario;
 
 @WebServlet(name = "SearchController", urlPatterns = {"/search"})
 public class SearchController extends HttpServlet {
@@ -15,6 +23,27 @@ public class SearchController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+        
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        
+        String tag = request.getParameter("search-tag");
+        Date date = new Date();
+        
+        Busca search = new Busca();
+        search.setTermo(tag);
+        search.setData(date);
+
+        // CASO HAJA USUÁRIO LOGADO    
+        if ( user != null ){            
+            search.setUsuario(user);            
+            new BuscaJpaController(emf).create(search);            
+        }
+        
+        RequestDispatcher rd = request.getRequestDispatcher("template.jsp");                   
+        request.setAttribute("page", "search");
+        request.setAttribute("search", search);
+        rd.forward(request, response);
         
         
     }

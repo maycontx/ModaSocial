@@ -24,6 +24,7 @@ import javax.persistence.EntityManagerFactory;
 import model.ImagemProduto;
 import model.RelProdutoCarrinho;
 import model.Avaliacao;
+import model.Busca;
 import model.Produto;
 import model.RelProdutoPromocao;
 
@@ -527,6 +528,16 @@ public class ProdutoJpaController implements Serializable {
         } catch (Exception ex) {
             return null;
         }
+    }
+    
+    public List<Produto> findSearchProduct(Busca search) {
+        String query = "SELECT p FROM Produto p WHERE p.descricao like CONCAT(:tag, '%') AND p.status = 'Ativo'";
+        
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("tag", search.getTermo());
+        
+        return q.getResultList();
+        
     }
 
 }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import model.Busca;
 import model.Endereço;
 import model.Avaliacao;
 import model.Carrinho;
@@ -42,6 +43,9 @@ public class UsuarioJpaController implements Serializable {
         if (usuario.getTicketList() == null) {
             usuario.setTicketList(new ArrayList<Ticket>());
         }
+        if (usuario.getBuscaList() == null) {
+            usuario.setBuscaList(new ArrayList<Busca>());
+        }
         if (usuario.getEndereçoList() == null) {
             usuario.setEndereçoList(new ArrayList<Endereço>());
         }
@@ -64,6 +68,12 @@ public class UsuarioJpaController implements Serializable {
                 attachedTicketList.add(ticketListTicketToAttach);
             }
             usuario.setTicketList(attachedTicketList);
+            List<Busca> attachedBuscaList = new ArrayList<Busca>();
+            for (Busca buscaListBuscaToAttach : usuario.getBuscaList()) {
+                buscaListBuscaToAttach = em.getReference(buscaListBuscaToAttach.getClass(), buscaListBuscaToAttach.getIdbusca());
+                attachedBuscaList.add(buscaListBuscaToAttach);
+            }
+            usuario.setBuscaList(attachedBuscaList);
             List<Endereço> attachedEndereçoList = new ArrayList<Endereço>();
             for (Endereço endereçoListEndereçoToAttach : usuario.getEndereçoList()) {
                 endereçoListEndereçoToAttach = em.getReference(endereçoListEndereçoToAttach.getClass(), endereçoListEndereçoToAttach.getIdendereço());
@@ -96,6 +106,15 @@ public class UsuarioJpaController implements Serializable {
                 if (oldUsuarioOfTicketListTicket != null) {
                     oldUsuarioOfTicketListTicket.getTicketList().remove(ticketListTicket);
                     oldUsuarioOfTicketListTicket = em.merge(oldUsuarioOfTicketListTicket);
+                }
+            }
+            for (Busca buscaListBusca : usuario.getBuscaList()) {
+                Usuario oldUsuarioOfBuscaListBusca = buscaListBusca.getUsuario();
+                buscaListBusca.setUsuario(usuario);
+                buscaListBusca = em.merge(buscaListBusca);
+                if (oldUsuarioOfBuscaListBusca != null) {
+                    oldUsuarioOfBuscaListBusca.getBuscaList().remove(buscaListBusca);
+                    oldUsuarioOfBuscaListBusca = em.merge(oldUsuarioOfBuscaListBusca);
                 }
             }
             for (Endereço endereçoListEndereço : usuario.getEndereçoList()) {
@@ -150,6 +169,8 @@ public class UsuarioJpaController implements Serializable {
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getIdusuario());
             List<Ticket> ticketListOld = persistentUsuario.getTicketList();
             List<Ticket> ticketListNew = usuario.getTicketList();
+            List<Busca> buscaListOld = persistentUsuario.getBuscaList();
+            List<Busca> buscaListNew = usuario.getBuscaList();
             List<Endereço> endereçoListOld = persistentUsuario.getEndereçoList();
             List<Endereço> endereçoListNew = usuario.getEndereçoList();
             List<Avaliacao> avaliacaoListOld = persistentUsuario.getAvaliacaoList();
@@ -165,6 +186,14 @@ public class UsuarioJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Ticket " + ticketListOldTicket + " since its usuario field is not nullable.");
+                }
+            }
+            for (Busca buscaListOldBusca : buscaListOld) {
+                if (!buscaListNew.contains(buscaListOldBusca)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Busca " + buscaListOldBusca + " since its usuario field is not nullable.");
                 }
             }
             for (Endereço endereçoListOldEndereço : endereçoListOld) {
@@ -209,6 +238,13 @@ public class UsuarioJpaController implements Serializable {
             }
             ticketListNew = attachedTicketListNew;
             usuario.setTicketList(ticketListNew);
+            List<Busca> attachedBuscaListNew = new ArrayList<Busca>();
+            for (Busca buscaListNewBuscaToAttach : buscaListNew) {
+                buscaListNewBuscaToAttach = em.getReference(buscaListNewBuscaToAttach.getClass(), buscaListNewBuscaToAttach.getIdbusca());
+                attachedBuscaListNew.add(buscaListNewBuscaToAttach);
+            }
+            buscaListNew = attachedBuscaListNew;
+            usuario.setBuscaList(buscaListNew);
             List<Endereço> attachedEndereçoListNew = new ArrayList<Endereço>();
             for (Endereço endereçoListNewEndereçoToAttach : endereçoListNew) {
                 endereçoListNewEndereçoToAttach = em.getReference(endereçoListNewEndereçoToAttach.getClass(), endereçoListNewEndereçoToAttach.getIdendereço());
@@ -246,6 +282,17 @@ public class UsuarioJpaController implements Serializable {
                     if (oldUsuarioOfTicketListNewTicket != null && !oldUsuarioOfTicketListNewTicket.equals(usuario)) {
                         oldUsuarioOfTicketListNewTicket.getTicketList().remove(ticketListNewTicket);
                         oldUsuarioOfTicketListNewTicket = em.merge(oldUsuarioOfTicketListNewTicket);
+                    }
+                }
+            }
+            for (Busca buscaListNewBusca : buscaListNew) {
+                if (!buscaListOld.contains(buscaListNewBusca)) {
+                    Usuario oldUsuarioOfBuscaListNewBusca = buscaListNewBusca.getUsuario();
+                    buscaListNewBusca.setUsuario(usuario);
+                    buscaListNewBusca = em.merge(buscaListNewBusca);
+                    if (oldUsuarioOfBuscaListNewBusca != null && !oldUsuarioOfBuscaListNewBusca.equals(usuario)) {
+                        oldUsuarioOfBuscaListNewBusca.getBuscaList().remove(buscaListNewBusca);
+                        oldUsuarioOfBuscaListNewBusca = em.merge(oldUsuarioOfBuscaListNewBusca);
                     }
                 }
             }
@@ -329,6 +376,13 @@ public class UsuarioJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Ticket " + ticketListOrphanCheckTicket + " in its ticketList field has a non-nullable usuario field.");
+            }
+            List<Busca> buscaListOrphanCheck = usuario.getBuscaList();
+            for (Busca buscaListOrphanCheckBusca : buscaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Busca " + buscaListOrphanCheckBusca + " in its buscaList field has a non-nullable usuario field.");
             }
             List<Endereço> endereçoListOrphanCheck = usuario.getEndereçoList();
             for (Endereço endereçoListOrphanCheckEndereço : endereçoListOrphanCheck) {

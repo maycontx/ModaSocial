@@ -57,7 +57,9 @@
             </div>
         </div>        
         <jsp:include page="struct/header.jsp" /> 
-        <jsp:include page="struct/content.jsp" />
+        <div class="main-content container">
+            <jsp:include page="struct/content.jsp" />
+        </div>
         <jsp:include page="struct/footer.jsp" />
     </div>
 </html>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
@@ -58,8 +53,6 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String sobrenome;
-    @Basic(optional = false)
-    @Column
     @Temporal(TemporalType.DATE)
     private Date nascimento;
     @Basic(optional = false)
@@ -68,7 +61,6 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String senha;
-    @Basic(optional = false)
     @Column(name = "tel_residencial", length = 255)
     private String telResidencial;
     @Column(name = "tel_comercial", length = 255)
@@ -82,6 +74,8 @@ public class Usuario implements Serializable {
     private BigDecimal credito;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Ticket> ticketList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Busca> buscaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Endereço> endereçoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -98,14 +92,12 @@ public class Usuario implements Serializable {
         this.idusuario = idusuario;
     }
 
-    public Usuario(Integer idusuario, String nome, String sobrenome, Date nascimento, String email, String senha, String telResidencial) {
+    public Usuario(Integer idusuario, String nome, String sobrenome, String email, String senha) {
         this.idusuario = idusuario;
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.nascimento = nascimento;
         this.email = email;
         this.senha = senha;
-        this.telResidencial = telResidencial;
     }
 
     public Integer getIdusuario() {
@@ -203,6 +195,15 @@ public class Usuario implements Serializable {
 
     public void setTicketList(List<Ticket> ticketList) {
         this.ticketList = ticketList;
+    }
+
+    @XmlTransient
+    public List<Busca> getBuscaList() {
+        return buscaList;
+    }
+
+    public void setBuscaList(List<Busca> buscaList) {
+        this.buscaList = buscaList;
     }
 
     @XmlTransient

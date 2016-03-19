@@ -5,6 +5,7 @@
     <link href="libs/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/global.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
+    <link href="css/page.css" rel="stylesheet">
     <link href="css/admin.css" rel="stylesheet">
     <script src="libs/js/jquery-1.12.1.min.js"></script>
     <script src="libs/js/bootstrap.min.js"></script>

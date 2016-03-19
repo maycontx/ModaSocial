@@ -7,18 +7,25 @@
 /* SEARCH PAGE */
 
 .search-filter{
-    width:100%;
-    border: 1px solid #333;
+    width:100%;    
 }
 
 .search-filter .filter-box{
     border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .search-filter .filter-box .filter-title{
     text-transform: uppercase;
+    padding-bottom: 10px;
 }
 
-.search-filter .filter-box .filter-item{
+.search-filter .filter-box .filter-item{    
     text-indent: 10px;
+    cursor: pointer;    
+}
+
+.search-filter .filter-box .filter-item:hover{
+    color: #777;
 }

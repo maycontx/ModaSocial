@@ -4,6 +4,7 @@ public class Filter {
     
     private String feature;
     private int amount;
+    private String type;
     
     public Filter(){
     
@@ -24,6 +25,16 @@ public class Filter {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    
     
     
     

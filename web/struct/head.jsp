@@ -12,5 +12,9 @@
     <script src="js/triggers.js"></script>
     <script src="js/global.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/ajax.js"></script>    
+    <script src="js/search.js"></script>  
+    <script src="js/ajax.js"></script>
+    <script>
+        var a = new Search();
+    </script>
 </head>

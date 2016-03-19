@@ -7,6 +7,7 @@ package model;
 
 import dao.ProdutoJpaController;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Busca.findByTermo", query = "SELECT b FROM Busca b WHERE b.termo = :termo"),
     @NamedQuery(name = "Busca.findByData", query = "SELECT b FROM Busca b WHERE b.data = :data")})
 public class Busca implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +58,17 @@ public class Busca implements Serializable {
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
+
+    transient List<Produto> products;
+    transient List<Filter> filters;
+
+    public void setProducts(List<Produto> products) {
+        this.products = products;
+    }
+
+    public void setFilters(List<Filter> filters) {
+        this.filters = filters;
+    }
 
     public Busca() {
     }
@@ -126,39 +139,81 @@ public class Busca implements Serializable {
     public String toString() {
         return "model.Busca[ idbusca=" + idbusca + " ]";
     }
-    
-    // OTHERS METHODS
-    public List<Produto> getProducts(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
-        return new ProdutoJpaController(emf).findSearchProduct(this);
-    }
-    
-    public List<Filter> getFilters(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
-        List<Produto> products = new ProdutoJpaController(emf).findSearchProduct(this);
-        
-        List<Filter> filters = new ArrayList<Filter>();
-        
-        for ( Produto p : products ){
-            String brand = p.getMarca();
-            boolean exist = false;
-            for ( Filter f : filters ){
-                if ( f.getFeature().equals(brand) ){
-                    f.setAmount(f.getAmount() + 1);
-                    exist = true;
-                }  
-            }
-            if ( exist == false ){
-                Filter filter = new Filter();
-                filter.setFeature(brand);
-                filter.setAmount(1);
 
-                filters.add(filter);
+    // OTHERS METHODS
+    public List<Produto> getProducts() {
+        if (this.products == null) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+            this.setProducts(new ProdutoJpaController(emf).findSearchProduct(this));
+        }
+
+        return this.products;
+    }
+
+    public List<Filter> getFilters() {
+        if (this.filters == null) {
+            List<Produto> products = this.getProducts();
+
+            List<Filter> filters = new ArrayList<Filter>();
+
+            for (Produto p : products) {
+                String brand = p.getMarca();
+                String price = String.valueOf(p.getPreco());
+                String category = p.getCategoria().getNome();
+                boolean existBrand = false;
+                boolean existPrice = false;
+                boolean existCategory = false;
+                for (Filter f : filters) {
+                    if (f.getFeature().equals(brand)) {
+                        f.setAmount(f.getAmount() + 1);
+                        existBrand = true;
+                    }
+                    
+                    if (f.getFeature().equals(price)) {
+                        f.setAmount(f.getAmount() + 1);
+                        existPrice = true;
+                    }
+                    
+                    if (f.getFeature().equals(category)) {
+                        f.setAmount(f.getAmount() + 1);
+                        existCategory = true;
+                    }
+                }
+                if (existBrand == false || existPrice == false || existCategory == false) {
+                    Filter bfilter = new Filter();
+                    Filter pfilter = new Filter();
+                    Filter cfilter = new Filter();
+                    
+                    if ( existBrand == false ){
+                        bfilter.setType("brand");
+                        bfilter.setFeature(brand);
+                        bfilter.setAmount(1);
+                        filters.add(bfilter);
+                    }
+                        
+                    if ( existPrice == false ){
+                        pfilter.setType("price");
+                        pfilter.setFeature(price);
+                        pfilter.setAmount(1);
+                        filters.add(pfilter);
+                    }
+                    
+                    if ( existCategory == false ){
+                        cfilter.setType("category");
+                        cfilter.setFeature(category);
+                        cfilter.setAmount(1);
+                        filters.add(cfilter);
+                    }   
+
+                    
+                }
             }
+
+            this.setFilters(filters);
         }
         
-        return filters;
-        
+        return this.filters;
+
     }
-    
+
 }

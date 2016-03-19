@@ -55,7 +55,7 @@ public class Validation {
 
     public static boolean checksUserRegister(Usuario usuario) {
 
-        Usuario user = new UsuarioJpaController(emf).findUsuarioByEmail(usuario);
+        Usuario user = new UsuarioJpaController(emf).findUsuarioByEmail(usuario.getEmail());
         if (user == null) {
             return false;
         }

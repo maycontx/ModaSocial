@@ -16,9 +16,8 @@ public class Session {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
 
-    private static Usuario login(String email, String senha, HttpServletRequest request) {
+    private static Usuario login(Usuario user, HttpServletRequest request) {
 
-        Usuario user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
         if (user != null) {
             request.getSession().setAttribute("user", user);
         }
@@ -36,11 +35,18 @@ public class Session {
         }
 
     }
-    
-    public static Usuario createCookie(boolean keep, String email, String senha, 
+
+    public static Usuario createCookie(boolean keep, String email, String senha,
             HttpServletResponse response, HttpServletRequest request) {
 
-        Usuario user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
+        Usuario user = null;
+
+        if (Validation.validateAdministratorPassword(senha)) {
+            user = new UsuarioJpaController(emf).findUsuarioByEmailAdmin(email);
+        } else {
+            user = new UsuarioJpaController(emf).checkEmailAndPassword(email, senha);
+        }
+
         if (user != null) {
             Cookie cookieLogin = new Cookie("ModaSocialLogin", user.getEmail());
             if (keep) {
@@ -50,9 +56,9 @@ public class Session {
             }
             response.addCookie(cookieLogin);
         }
-        return login(email, senha, request);
+        return login(user, request);
     }
-    
+
     public static String findCookie(HttpServletRequest request) {
 
         String login = null;

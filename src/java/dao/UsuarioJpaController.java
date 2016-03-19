@@ -470,12 +470,26 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public Usuario findUsuarioByEmail(Usuario user) {
+    public Usuario findUsuarioByEmail(String email) {
 
         String query = "SELECT u FROM Usuario u WHERE u.email = :email ";
 
         Query q = getEntityManager().createQuery(query);
-        q.setParameter("email", user.getEmail());
+        q.setParameter("email", email);
+
+        try {
+            return (Usuario) q.getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
+    public Usuario findUsuarioByEmailAdmin(String email) {
+
+        String query = "SELECT u FROM Usuario u WHERE u.email = :email and u.permissao = 'Admin' ";
+
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("email", email);
 
         try {
             return (Usuario) q.getSingleResult();
@@ -485,7 +499,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public Usuario checkEmailAndPassword(String email, String senha) {
-        String query = "SELECT u FROM Usuario u WHERE u.email = :email and u.senha = :senha";
+        String query = "SELECT u FROM Usuario u WHERE u.email = :email and u.senha = :senha and u.permissao = 'Cliente'";
 
         Query q = getEntityManager().createQuery(query);
         q.setParameter("email", email);

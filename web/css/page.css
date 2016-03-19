@@ -1,0 +1,24 @@
+/* CONTENT */
+.main-content{
+    margin-top: 150px;
+    margin-bottom: 30px;
+}
+
+/* SEARCH PAGE */
+
+.search-filter{
+    width:100%;
+    border: 1px solid #333;
+}
+
+.search-filter .filter-box{
+    border-bottom: 1px solid #eee;
+}
+
+.search-filter .filter-box .filter-title{
+    text-transform: uppercase;
+}
+
+.search-filter .filter-box .filter-item{
+    text-indent: 10px;
+}

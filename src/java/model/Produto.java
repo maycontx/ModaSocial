@@ -56,7 +56,7 @@ public class Produto implements Serializable {
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
-    private String descricao;
+    private String descricao;    
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String marca;
@@ -104,11 +104,13 @@ public class Produto implements Serializable {
         this.estoque = estoque;
     }
     
-    public List<Produto> getSortProdutos(EntityManagerFactory emf){
+    public List<Produto> getSortProdutos(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
         return new ProdutoJpaController(emf).findSortProdutos();
     }
     
-    public List<Produto> getRelated(EntityManagerFactory emf){
+    public List<Produto> getRelated(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
         return new ProdutoJpaController(emf).findRelated(this);
     }
 
@@ -252,6 +254,11 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return "model.Produto[ idproduto=" + idproduto + " ]";
+    }
+    
+    /* OTHERS METHODS */
+    public String getShortDescription(){
+        return this.descricao.substring(0, 300) + "...";
     }
     
 }

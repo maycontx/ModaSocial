@@ -29,3 +29,200 @@
 .search-filter .filter-box .filter-item:hover{
     color: #777;
 }
+
+/* PRODUCT PAGE */
+.product-row{
+    margin-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #cccccc;
+}
+
+.product-row .product-img-main, .product-row .product-img-secundary{
+    width: 100%;    
+}
+
+.product-row .product-img-main img{
+    width: 100%;
+}
+
+.product-row .product-img-secundary{
+    float: left;
+    margin-top: 20px;
+    padding-bottom: 5px;   
+    
+}
+
+.product-row .product-img-secundary div{
+    padding: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.product-row .product-img-secundary div:hover{   
+    border: 1px solid #eeeeee;
+}
+
+.product-row .product-img-secundary div img{
+    width: 100%;
+}
+
+.product-row .product-info ul li{
+    border: none;
+    border-top: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.product-row .product-info ul li:first-child{
+    border: none;
+}
+
+.product-row .product-info ul li:last-child{
+    border-bottom: 1px solid #ccc;   
+}
+
+.product-row .product-info ul .product-name, .product-row .product-feature ul .product-name{
+    font-size: 24px;
+}
+
+.product-row .product-info ul .product-brand{
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+}
+
+.product-row .product-info ul .product-description .description-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-row .product-info ul .product-price{
+    font-size: 28px;
+}
+
+.product-row .product-info ul .product-status{
+    color: #55A755;
+}
+
+.product-row .product-info ul .product-status .last-un{
+    color: red;
+}
+
+.product-row .product-feature ul li{
+    border: none;
+}
+
+.product-row .product-feature ul .no-feature{   
+    color: #cccccc;
+}
+
+.product-row .product-feature ul li .feature-title{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.product-row .buttons .btn{
+    position: relative;
+    padding: 15px;
+    width: 280px;
+    clear: both;
+    margin-bottom: 15px;
+    background-color: #143C07;
+    border: 1px solid #143C07;
+    
+}
+
+.product-row .buttons .btn i{
+    position: absolute;
+    font-size: 35px;
+    left: 20px;
+    top: 5px;
+}
+
+.product-row .product-tab{
+    margin-top:20px;
+}
+
+.product-row .tab-content{
+    padding: 20px 10px;
+}
+
+.tab-content .product-rating{
+    float: left;
+    width: 100%;
+}
+
+.tab-content .product-rating .no-rating{
+    color: #777777;
+    text-align: center;
+    width: 100%;
+}
+
+.tab-content .product-rating .rating-box{
+    float: left;
+    width: 100%;
+    padding: 10px 5px;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 10px;
+}
+
+.tab-content .product-rating .rating-box .rating-header{
+    float: left;
+    width: 100%;    
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.tab-content .product-rating .rating-box .rating-header .header-user{
+    float: left;
+    font-weight: bold;
+}
+
+.tab-content .product-rating .rating-box .rating-header .header-rate{
+    float: right;
+}
+
+.tab-content .product-rating .rating-box .rating-body{
+    float: left;
+    width: 100%;
+}
+
+tab-content .product-rating .rating-box .rating-body .body-comment{
+   float: left;
+   width: 100%;
+   margin-bottom: 5px;
+}
+
+.tab-content .product-rating .rating-box .rating-body .body-date{
+   float: right;
+   font-weight: bold;
+}
+
+.tab-content .product-new-rating{
+    padding-top: 10px;
+    padding-bottom: 20px;    
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+
+.tab-content .product-new-rating h3{
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.tab-content .product-new-rating .new-rate{
+    float: right;
+    margin-bottom: 2px;
+}
+
+.tab-content .product-new-rating .new-rate span:first-child{
+    margin-right: 10px;
+}
+
+.tab-content .product-new-rating .new-rate .glyphicon-star-empty, .tab-content .product-new-rating .new-rate .glyphicon-star{
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+.tab-content .product-new-rating .new-comment input{
+    margin-top: 10px;
+}

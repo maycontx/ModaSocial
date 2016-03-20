@@ -31,3 +31,23 @@ var registerForm = {
     }
 };
 
+var rating = {
+    selectContent: function(btn){
+        var rate = btn.attr("data-info");        
+        var inputRate = $("input[name='rating-rate']");
+        var inputComment = $("textarea[name='rating-comment']");
+        
+        $("span[data-reactid='fav-star']").each(function(){
+            if ( $(this).attr("data-info") <= rate ){
+                $(this).removeClass("glyphicon-star-empty");
+                $(this).addClass("glyphicon-star");
+            }else{
+                $(this).removeClass("glyphicon-star");
+                $(this).addClass("glyphicon-star-empty");
+            }
+        });
+        inputRate.val(rate);
+        
+    }
+}
+

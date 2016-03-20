@@ -46,40 +46,42 @@
 <div class="col-lg-9">
     <c:forEach items="${search.getProducts()}" var="product">    
         <div data-id="search-product" class="col-lg-4">
-            <div class="product">
-                <div class="product-img">
-                    <img src="img/crew-tshirt-resized-680x680.png">
-                    <div class="product-info">                       
-                        <div class="info-header">
-                            <span data-reactid="search-brand">${product.marca}</span><span data-reactid="search-category">${product.categoria.nome}</span>
+            <a href="product?p=${product.idproduto}">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="img/crew-tshirt-resized-680x680.png">
+                        <div class="product-info">                       
+                            <div class="info-header">
+                                <span data-reactid="search-brand">${product.marca}</span><span data-reactid="search-category">${product.categoria.nome}</span>
+                            </div>
+                            <div class="info-body">
+                                <div class="feature">
+                                    <span class="badge">Cor:</span> Vermelho
+                                </div>
+                                <div class="feature">
+                                    <span class="badge">Material:</span> Malha fina
+                                </div>  
+                            </div>                       
+                            <div class="info-footer">
+                                <div class="info-footer-btn">
+                                    <i class="fa fa-heart-o"></i>
+                                </div>
+                                <div class="info-footer-btn">
+                                    <i class="fa fa-cart-plus"></i>
+                                </div>
+                            </div>
                         </div>
-                        <div class="info-body">
-                            <div class="feature">
-                                <span class="badge">Cor:</span> Vermelho
-                            </div>
-                            <div class="feature">
-                                <span class="badge">Material:</span> Malha fina
-                            </div>  
-                        </div>                       
-                        <div class="info-footer">
-                            <div class="info-footer-btn">
-                                <i class="fa fa-heart-o"></i>
-                            </div>
-                            <div class="info-footer-btn">
-                                <i class="fa fa-cart-plus"></i>
-                            </div>
+                    </div>                
+                    <div class="product-basic-info">
+                        <div class="col-lg-8 product-name">
+                            <a href="#">${product.nome}</a>   
                         </div>
-                    </div>
-                </div>                
-                <div class="product-basic-info">
-                    <div class="col-lg-8 product-name">
-                        <a href="#">${product.nome}</a>   
-                    </div>
-                    <div data-reactid="search-price" class="col-lg-4 product-price">
-                        R$ ${product.preco}
+                        <div data-reactid="search-price" class="col-lg-4 product-price">
+                            R$ ${product.preco}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </c:forEach>
 </div>

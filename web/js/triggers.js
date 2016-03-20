@@ -23,3 +23,8 @@ $(document).on("click", "span[data-id='search-trigger']", function(){
    var form = $("form[name='search-form']");
    form.submit();
 });
+
+// RATING MOUSE OVER TRIGGER
+$(document).on("click", "span[data-reactid='fav-star']", function(){   
+    rating.selectContent($(this));
+});

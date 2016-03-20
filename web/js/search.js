@@ -79,7 +79,7 @@ Search.prototype = {
             lastComponent.css({
                 "text-indent": "10px",
                 "font-weight": "normal",
-                "color": "#777777"
+                "color": "#333333"
              });            
         }
         

@@ -261,4 +261,43 @@ public class Produto implements Serializable {
         return this.descricao.substring(0, 300) + "...";
     }
     
+    public String getRateBalance(){
+        
+        List<Avaliacao> ratings = this.getAvaliacaoList();
+        
+        double total = ratings.size();
+        double nota1 = 0;
+        double nota2 = 0;
+        double nota3 = 0;
+        double nota4 = 0;
+        double nota5 = 0;
+        
+        for ( Avaliacao r : ratings ){
+            switch (r.getNota()){
+                case 1:
+                    nota1++;
+                    break;
+                case 2:
+                    nota2++;
+                    break;
+                case 3:
+                    nota3++;
+                    break;
+                case 4:
+                    nota4++;
+                    break;
+                case 5:
+                    nota5++;
+                    break;
+            }
+        }
+        
+        return (( nota1/total ) * 100) + "% Muito ruim <br/>" + 
+               (( nota2/total ) * 100) + "% Ruim <br/>" + 
+               (( nota3/total ) * 100) + "% Razoável <br/>" + 
+               (( nota4/total ) * 100) + "% Bom <br/>" + 
+               (( nota5/total ) * 100) + "% Muito bom ";
+        
+    }
+    
 }

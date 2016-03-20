@@ -42,11 +42,14 @@
                 <li class="list-group-item product-price">
                     R$ ${product.preco}
                 </li>
+                <li class="list-group-item product-rate">
+                    ${product.getRateBalance()}
+                </li>
                 <li class="list-group-item product-status">
                     <c:if test="${product.estoque > 10}">                   
                         <span class="glyphicon glyphicon-thumbs-up"></span> Disponível                   
                     </c:if>               
-                </li>
+                </li>                
             </ul>
         </div>
     </div>

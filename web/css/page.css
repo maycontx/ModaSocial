@@ -226,3 +226,47 @@ tab-content .product-rating .rating-box .rating-body .body-comment{
 .tab-content .product-new-rating .new-comment input{
     margin-top: 10px;
 }
+
+/* PROFILE PAGE */
+
+.profile-page .row{
+    margin-bottom: 20px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.side-menu{
+    padding: 5px;
+}
+
+.side-menu .menu-title{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.side-menu .menu-item{
+    color: #555555;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.side-menu .menu-item:hover{
+    background-color: #eeeeee;
+}
+
+.preferences .form-row{
+    padding: 10px 0;    
+}
+
+.preferences .form-row .field-title{
+    margin-right: 20px;
+    font-weight: bold;
+    width: 150px;
+}
+
+.preferences .form-row span{
+    display: inline-block;
+    margin-right: 10px;
+}

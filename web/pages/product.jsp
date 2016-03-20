@@ -110,12 +110,12 @@
                     <div class="rating-box">
                         <div class="rating-header">
                             <div class="header-user">${rating.usuario.nome} ${rating.usuario.sobrenome}</div>
-                            <div class="header-rate">
-                                <span data-reactid="icon-star" class="glyphicon glyphicon-star-empty"></span>
-                                <span data-reactid="icon-star" class="glyphicon glyphicon-star-empty"></span>
-                                <span data-reactid="icon-star" class="glyphicon glyphicon-star-empty"></span>
-                                <span data-reactid="icon-star" class="glyphicon glyphicon-star-empty"></span>
-                                <span data-reactid="icon-star" class="glyphicon glyphicon-star-empty"></span>
+                            <div data-id="rate-box" data-info="${rating.nota}" class="header-rate">
+                                <span data-reactid="icon-star" data-info="1" class="glyphicon glyphicon-star-empty"></span>
+                                <span data-reactid="icon-star" data-info="2" class="glyphicon glyphicon-star-empty"></span>
+                                <span data-reactid="icon-star" data-info="3" class="glyphicon glyphicon-star-empty"></span>
+                                <span data-reactid="icon-star" data-info="4" class="glyphicon glyphicon-star-empty"></span>
+                                <span data-reactid="icon-star" data-info="5" class="glyphicon glyphicon-star-empty"></span>
                             </div>
                         </div>
                         <div class="rating-body">

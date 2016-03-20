@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import model.Usuario;
 import model.Venda;
 
 /**
@@ -256,6 +257,6 @@ public class VendaJpaController implements Serializable {
         } finally {
             em.close();
         }
-    }
+    }   
     
 }

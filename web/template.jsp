@@ -43,12 +43,21 @@
                     </div>    
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <input class="form-control" type="text" name="log-email" placeholder="E-mail">
+                            <input class="form-control" type="text" name="log-email" placeholder="E-mail" value="${emailCookie != null ? emailCookie : ""}">
                         </div>    
                         <div class="col-lg-6">
                             <input class="form-control" type="password" name="log-pass" placeholder="Senha">
                         </div>
-                    </div>                   
+                    </div> 
+                    <div class="col-lg-6">
+                        <c:if test="${emailCookie != null}">
+                            <input id="log-keep" name="log-keep" type="checkbox" checked>
+                        </c:if>
+                        <c:if test="${emailCookie == null}">
+                            <input id="log-keep" name="log-keep" type="checkbox">
+                        </c:if>
+                        <label for="log-keep">Lembrar meu e-mail</label>
+                    </div>
                     <div class="form-row">  
                         <input type="button" class="btn btn-default" value="Fechar" data-id="hide-modal">  
                         <input type="submit" class="btn btn-primary" value="Entrar">                    

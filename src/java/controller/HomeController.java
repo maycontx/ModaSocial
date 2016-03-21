@@ -1,5 +1,6 @@
 package controller;
 
+import helper.Session;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,13 +13,17 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
+        String emailCookie = Session.findCookie(request);
+
         RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
-        
+        if (emailCookie != null) {
+            request.setAttribute("emailCookie", emailCookie);
+        }
         request.setAttribute("page", "home");
-        
+
         rd.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

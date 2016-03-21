@@ -29,10 +29,11 @@ public class LoginController extends HttpServlet {
        
         String email = request.getParameter("log-email");
         String password = request.getParameter("log-pass");
+        boolean keep = request.getParameter("log-keep") != null;
         
         RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
         
-        Usuario user = Session.createCookie(false, email, password, response, request);
+        Usuario user = Session.createCookie(keep, email, password, response, request);
         if ( user == null )
             request.setAttribute("login", false);
         else

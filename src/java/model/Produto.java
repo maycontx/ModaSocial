@@ -6,6 +6,7 @@
 package model;
 
 import dao.ProdutoJpaController;
+import helper.Session;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +26,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -298,6 +300,10 @@ public class Produto implements Serializable {
                (( nota4/total ) * 100) + "% Bom <br/>" + 
                (( nota5/total ) * 100) + "% Muito bom ";
         
+    }
+    
+    public void addProductInShoppingCart(HttpServletRequest request){
+        Session.addProductInShoppingCart(this, request);
     }
     
 }

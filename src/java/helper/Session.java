@@ -1,11 +1,14 @@
 package helper;
 
 import dao.UsuarioJpaController;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Produto;
 import model.Usuario;
 
 /**
@@ -71,6 +74,16 @@ public class Session {
             }
         }
         return login;
+    }
+    
+    public static void addProductInShoppingCart(Produto produto, HttpServletRequest request){
+        List<Produto> shoppingCart = (List<Produto>) request.getSession().getAttribute("shoppingCart");
+        
+        if(shoppingCart == null){
+            shoppingCart = new ArrayList<Produto>();
+        }
+        shoppingCart.add(produto);
+        request.getSession().setAttribute("shoppingCart", shoppingCart);
     }
 
 }

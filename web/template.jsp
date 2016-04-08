@@ -66,7 +66,7 @@
             </div>
         </div>        
         <jsp:include page="struct/header.jsp" /> 
-        <div class="main-content container">
+        <div class="main-content container-fluid">
             <jsp:include page="struct/content.jsp" />
         </div>
         <jsp:include page="struct/footer.jsp" />

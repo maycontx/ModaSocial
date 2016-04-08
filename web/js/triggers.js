@@ -28,3 +28,15 @@ $(document).on("click", "span[data-id='search-trigger']", function(){
 $(document).on("click", "span[data-reactid='fav-star']", function(){   
     rating.selectContent($(this));
 });
+
+// AMOUNT CART CHANGE
+$(document).on("change", "input[data-id='amount-cart']", function(){   
+    cartAmount.change($(this), "update");
+});
+
+// AMOUNT REMOVER CART
+$(document).on("click", "span[data-id='remove-amount-cart']", function(){   
+    cartAmount.change($(this), "delete");
+});
+
+

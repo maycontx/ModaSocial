@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -41,7 +42,8 @@ public class Carrinho implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer idcarrinho;
-    private Integer cupom;
+    private Integer cupom;    
+    private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrinho")
     private List<RelProdutoCarrinho> relProdutoCarrinhoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrinho")
@@ -119,9 +121,31 @@ public class Carrinho implements Serializable {
         return true;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "model.Carrinho[ idcarrinho=" + idcarrinho + " ]";
+    }
+    
+    public double getTotalValue(){
+        
+        double total = 0;
+        
+        for ( RelProdutoCarrinho rel : this.getRelProdutoCarrinhoList() ){
+            total += ( Integer.valueOf(rel.getProduto().getPreco().intValue()) * rel.getQuantidade() );
+        }
+        
+        return total;
+        
     }
     
 }

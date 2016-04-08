@@ -15,10 +15,13 @@ import javax.persistence.criteria.Root;
 import model.Usuario;
 import model.RelProdutoCarrinho;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import model.Carrinho;
+import model.Produto;
 import model.Venda;
 
 /**
@@ -36,7 +39,7 @@ public class CarrinhoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Carrinho carrinho) {
+    public int create(Carrinho carrinho) {
         if (carrinho.getRelProdutoCarrinhoList() == null) {
             carrinho.setRelProdutoCarrinhoList(new ArrayList<RelProdutoCarrinho>());
         }
@@ -93,6 +96,8 @@ public class CarrinhoJpaController implements Serializable {
                 em.close();
             }
         }
+        
+        return carrinho.getIdcarrinho();
     }
 
     public void edit(Carrinho carrinho) throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -281,6 +286,20 @@ public class CarrinhoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public Carrinho findActiveCartByUser(Usuario user){
+        String query = "SELECT c FROM Carrinho c WHERE c.usuario = :user AND c.status = 'ativo'";
+
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("user", user);
+        
+        try{
+            return (Carrinho) q.getSingleResult();
+        }catch(Exception ex){
+            return null;
+        }
+        
     }
     
 }

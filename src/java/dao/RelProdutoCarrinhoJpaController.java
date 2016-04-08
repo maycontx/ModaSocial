@@ -194,4 +194,18 @@ public class RelProdutoCarrinhoJpaController implements Serializable {
         }
     }
     
+    public RelProdutoCarrinho findRelationByProductAndCart(Produto product, Carrinho cart){
+        String query = "SELECT r FROM RelProdutoCarrinho r WHERE r.produto = :product AND r.carrinho = :cart";
+
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("product", product);
+        q.setParameter("cart", cart);
+        
+        try{
+            return (RelProdutoCarrinho) q.getSingleResult();
+        }catch(Exception ex){
+            return null;
+        }
+    }
+    
 }

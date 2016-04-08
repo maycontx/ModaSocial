@@ -270,3 +270,81 @@ tab-content .product-rating .rating-box .rating-body .body-comment{
     display: inline-block;
     margin-right: 10px;
 }
+
+/* CART PAGE */
+.cart .no-item{
+    text-align: center;
+    font-size: 18px;
+    color: #ccc;
+    width: 100%;
+}
+
+.cart table tbody tr td{
+    vertical-align: middle;
+}
+
+.cart table tbody tr td input{
+    padding: 10px;
+    width: 80px;
+}
+
+.cart table tbody tr td .glyphicon{
+    color: #8A1111;
+    cursor: pointer;
+}
+
+.cart table tbody tr td .glyphicon:hover{
+    color: #C54343;
+}
+
+.cart .cart-btn{
+    text-align: right;
+}
+
+.cart .cart-info{
+    float: left;
+    width: 100%;
+    text-align: right;
+}
+
+.cart .cart-info > div{
+    float: right;
+    clear: both;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.cart .cart-info .value-total span, .cart .cart-info .value-final span{
+    font-weight: bold;
+}
+
+.cart .cart-info .delivery-postal{
+   
+}
+
+.cart .cart-info .delivery-postal > div{
+    padding-left: 5px;
+    padding-right: 0;    
+}
+
+.cart .cart-info .delivery-postal .col-lg-2{
+    padding: 5px;
+}
+
+.cart .cart-info .delivery-postal .col-lg-4 button{
+    width: 100%;
+}
+
+.cart .cart-btn button{
+    background-color: #143C07;
+    border-color: #143C07;
+    padding: 10px 15px;   
+    width: 280px;
+}
+
+.cart .cart-btn button i{
+   position: relative;
+   font-size: 35px;
+   top: 5px;
+   left: -10px;
+}

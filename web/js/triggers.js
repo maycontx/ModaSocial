@@ -44,4 +44,12 @@ $(document).on("click", "button[data-id='new-address']", function(){
     address.new();
 });
 
+//CEP TRIGGER
+$(document).on("keyup", "input[name='new-address-code']", function(){  
+    if ( $(this).val().length == 9 )
+        address.cep($(this).val());
+});
+
+
+
 

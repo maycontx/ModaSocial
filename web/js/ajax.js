@@ -60,5 +60,23 @@ var address = {
     
         });
         
+    },
+    cep: function(cep){
+        $.ajax({
+            url: "step1",
+            method: "POST",
+            data: {
+                status: "new-cep",
+                newcep: cep                
+            },
+            success: function() {
+               $("#address").load("step1?refresh=true");
+            },
+            error: function(){
+                alert("WRONG");
+            }
+    
+        });
+        
     }
 };

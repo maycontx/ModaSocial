@@ -32,6 +32,7 @@ public class AddressController extends HttpServlet {
             
         String refresh = request.getParameter("refresh");
         String status = request.getParameter("status");
+        String cep2 = request.getParameter("newcep");
         
         if ( status != null && status.equals("new-address") ){
         
@@ -59,9 +60,13 @@ public class AddressController extends HttpServlet {
             new EndereçoJpaController(emf).create(address);           
             
             
+        } if ( status != null && status.equals("new-cep") ){
+            // SEU CODIGO AQUI TIAGO
         }else if (refresh != null && refresh.equals("true")){  
             RequestDispatcher rd = request.getRequestDispatcher("pages/address/address.jsp");
             request.setAttribute("user", user);
+            // SEU OBJETO AQUI
+            //request.setAttribute("address", endereco);
             rd.forward(request, response);
         }else{
             RequestDispatcher rd = request.getRequestDispatcher("template.jsp");

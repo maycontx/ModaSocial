@@ -45,26 +45,35 @@ public class CartController extends HttpServlet {
         if (p != null) {
 
             try {
+                // FIND PRODUCT TO PUT ON THE CART
                 Produto product = productData.findProduto(Integer.parseInt(p));
 
+                // CHECKING NULL CART 
                 if (cart == null) {
                     cart = new Carrinho();
                     cart.setUsuario(user);
+                    cart.setStatus("ativo");
+                    // CREATE A CART AND PUT HIS ID ON FIRE
                     cart.setIdcarrinho(cartData.create(cart));
                 }
 
+                // FIND RELATION ABOUT THAT PRODUCT WITH THAT CART
                 RelProdutoCarrinho rel = cartProduct.findRelationByProductAndCart(product, cart);
+                // IF NOT HAVE, CREATE THEN
                 if (rel == null) {
                     rel = new RelProdutoCarrinho();
                     rel.setProduto(product);
                     rel.setCarrinho(cart);
                     rel.setQuantidade(1);
-                    cartProduct.create(rel);
-                } else {
+                    cartProduct.create(rel);                
+                } else 
+                // IF HAVE JUST SET AMOUNT
+                {
                     rel.setQuantidade(rel.getQuantidade() + 1);
                     cartProduct.edit(rel);
                 }
 
+                // RELOADING CART
                 cart = cartData.findActiveCartByUser(user);
                 
                 RequestDispatcher rd = request.getRequestDispatcher("template.jsp");

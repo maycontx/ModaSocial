@@ -1,12 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${user != null}">
     <div class="btn-group" data-toggle="buttons">
-        <div class="col-lg-4 btn btn-primary">
+        <div class="col-lg-3 btn btn-primary">
             <input type="radio" name="address" id="0" autocomplete="off">
             <div class="title">Novo endereço</div>
             <ul class="list-group">
                 <li class="list-group-item"><div class="address-label">País</div> <input type="text" class="form-control" value="Brasil" readonly></li>
-                <li class="list-group-item"><div class="address-label">CEP</div> <input type="text" class="form-control" name="new-address-code"></li>
+                <li class="list-group-item">
+                    <div class="address-label">CEP</div> 
+                    <input type="text" class="form-control" name="new-address-code">
+                </li>
                 <li class="list-group-item"><div class="address-label">Estado</div>
                     <select class="form-control" name="new-address-state">
                         <option value="AC">Acre</option>

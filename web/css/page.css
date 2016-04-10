@@ -348,3 +348,29 @@ tab-content .product-rating .rating-box .rating-body .body-comment{
    top: 5px;
    left: -10px;
 }
+
+/* ADDRESS PAGE */
+
+.address .btn-group{
+    width: 100%;
+}
+
+.address .btn-group > div > .title{
+    margin-bottom: 10px;
+}
+
+.address .btn-group div ul li{
+    color: #333333;
+}
+
+.address .btn-group div ul li span{
+    float: none;
+}
+
+.address .btn-group div ul li .address-label{
+    float: left;
+}
+
+.address .btn-group div ul li button{
+    float: right;
+}

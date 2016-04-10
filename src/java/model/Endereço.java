@@ -62,6 +62,9 @@ public class Endereço implements Serializable {
     private String bairro;
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
+    private String rua;
+    @Basic(optional = false)
+    @Column(nullable = false, length = 255)
     private String cep;
     @Column(length = 255)
     private String lugradouro;
@@ -130,6 +133,14 @@ public class Endereço implements Serializable {
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }  
 
     public String getCep() {
         return cep;

@@ -44,7 +44,7 @@
             </div>                    
         </div>
         <div class="cart-btn">
-            <button class="btn btn-success buy"><i class="fa fa-cart-arrow-down"></i> Finalizar compra</button>
+            <a href="step1"><button class="btn btn-success buy"><i class="fa fa-cart-arrow-down"></i> Finalizar compra</button></a>
         </div>
     </c:if>
     <c:if test="${cart.getRelProdutoCarrinhoList().size() <= 0}">
@@ -52,5 +52,5 @@
     </c:if>
 </c:if>
 <c:if test="${cart == null}">
-    WRONG MAN!
+    <div class="no-item">Ocorreu um erro =(</div>
 </c:if>

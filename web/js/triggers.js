@@ -39,4 +39,9 @@ $(document).on("click", "span[data-id='remove-amount-cart']", function(){
     cartAmount.change($(this), "delete");
 });
 
+// NEW ADDRESS TRIGGER
+$(document).on("click", "button[data-id='new-address']", function(){  
+    address.new();
+});
+
 

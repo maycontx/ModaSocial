@@ -16,7 +16,7 @@
         <c:if test="${user == null}"><div class="menu-item" data-id="register-open">Cadastrar</div></c:if>
         <c:if test="${user == null}"><div class="menu-item" data-id="login-open">Entrar</div></c:if>
         <c:if test="${user != null}"><div class="menu-item"><a href="profile">Minha conta</a></div></c:if>
-        <c:if test="${user != null}"><div class="menu-item">Meus pedidos</div></c:if>
+        <c:if test="${user != null}"><div class="menu-item"><a href="cart">Meu carrinho</a></div></c:if>
         <div class="menu-item search-box">
             <form method="POST" name="search-form" action="search">
                 <div class="input-group">

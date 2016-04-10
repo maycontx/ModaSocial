@@ -25,3 +25,40 @@ var cartAmount = {
         });
     }
 };
+
+var address = {
+    new: function(){
+        var state = $("select[name='new-address-state']").val();
+        var city = $("input[name='new-address-city']").val();
+        var local = $("input[name='new-address-city']").val();
+        var street = $("input[name='new-address-city']").val();
+        var local2 = $("input[name='new-address-city']").val();
+        var complement = $("input[name='new-address-city']").val();
+        var cep = $("input[name='new-address-code']").val();
+        var phone = $("input[name='new-address-phone']").val();
+        
+        $.ajax({
+            url: "step1",
+            method: "POST",
+            data: {
+                status: "new-address",
+                state: state,
+                city: city,
+                local: local,
+                street: street,
+                local2: local2,
+                complement: complement,
+                cep: cep,
+                phone: phone
+            },
+            success: function() {
+               $("#address").load("step1?refresh=true");
+            },
+            error: function(){
+                alert("WRONG");
+            }
+    
+        });
+        
+    }
+};

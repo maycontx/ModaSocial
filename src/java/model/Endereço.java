@@ -72,6 +72,8 @@ public class Endereço implements Serializable {
     private String complemento;
     @Column(length = 255)
     private String telefone;
+    @Column(length = 255)
+    private String nome;
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -85,13 +87,14 @@ public class Endereço implements Serializable {
         this.idendereço = idendereço;
     }
 
-    public Endereço(Integer idendereço, String pais, String estado, String cidade, String bairro, String cep) {
+    public Endereço(Integer idendereço, String pais, String estado, String cidade, String bairro, String cep, String nome) {
         this.idendereço = idendereço;
         this.pais = pais;
         this.estado = estado;
         this.cidade = cidade;
         this.bairro = bairro;
         this.cep = cep;
+        this.nome = nome;
     }
 
     public Integer getIdendereço() {
@@ -169,6 +172,16 @@ public class Endereço implements Serializable {
     public String getTelefone() {
         return telefone;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;

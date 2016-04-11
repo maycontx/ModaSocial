@@ -2,6 +2,7 @@ package controller;
 
 import dao.EndereçoJpaController;
 import dao.UsuarioJpaController;
+import jacontrol.Classes.WebServiceCep;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +25,7 @@ public class AddressController extends HttpServlet {
       
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
         
+        
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         if (user != null){
             user = new UsuarioJpaController(emf).findUsuario(user.getIdusuario());
@@ -44,6 +46,7 @@ public class AddressController extends HttpServlet {
             String street = request.getParameter("street");
             String phone = request.getParameter("phone");
             String complement = request.getParameter("complement");
+            String name = request.getParameter("name");
             
             Endereço address = new Endereço();
             address.setPais("Brasil");
@@ -56,17 +59,22 @@ public class AddressController extends HttpServlet {
             address.setComplemento(complement);
             address.setTelefone(phone);
             address.setUsuario(user);
+            address.setNome(name);
             
-            new EndereçoJpaController(emf).create(address);           
-            
-            
+            new EndereçoJpaController(emf).create(address);  
+
         } if ( status != null && status.equals("new-cep") ){
-            // SEU CODIGO AQUI TIAGO
+
+            String cep = request.getParameter("newcep");
+            if (cep != null) {
+                WebServiceCep addressWebService = WebServiceCep.searchCep(cep);
+                request.getSession().setAttribute("address", addressWebService);
+            }
+            
         }else if (refresh != null && refresh.equals("true")){  
+            
             RequestDispatcher rd = request.getRequestDispatcher("pages/address/address.jsp");
             request.setAttribute("user", user);
-            // SEU OBJETO AQUI
-            //request.setAttribute("address", endereco);
             rd.forward(request, response);
         }else{
             RequestDispatcher rd = request.getRequestDispatcher("template.jsp");

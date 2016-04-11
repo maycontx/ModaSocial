@@ -7,7 +7,7 @@
                 </c:if>
             </c:if>            
         FAQ | Contato
-        <c:if test="${user != null}">| Sair</c:if>
+        <c:if test="${user != null}">| <a href="Logout">Sair</a></c:if>
     </div>
     <div class="menu">
         <div class="menu-item">

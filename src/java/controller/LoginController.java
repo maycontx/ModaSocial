@@ -26,22 +26,23 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+
         String email = request.getParameter("log-email");
         String password = request.getParameter("log-pass");
         boolean keep = request.getParameter("log-keep") != null;
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
-        
+
         Usuario user = Session.createCookie(keep, email, password, response, request);
-        if ( user == null )
+        if (user == null) {
             request.setAttribute("login", false);
-        else
-            request.setAttribute("login", true); 
-                   
+            request.setAttribute("status", "loginFail");
+        } else {
+            request.setAttribute("login", true);
+        }
         request.setAttribute("page", "home");
         rd.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

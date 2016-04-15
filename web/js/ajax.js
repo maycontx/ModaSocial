@@ -30,17 +30,19 @@ var address = {
     new: function(){
         var state = $("select[name='new-address-state']").val();
         var city = $("input[name='new-address-city']").val();
-        var local = $("input[name='new-address-city']").val();
-        var street = $("input[name='new-address-city']").val();
-        var local2 = $("input[name='new-address-city']").val();
-        var complement = $("input[name='new-address-city']").val();
+        var local = $("input[name='new-address-local']").val();
+        var street = $("input[name='new-address-street']").val();
+        var local2 = $("input[name='new-address-number']").val();
+        var complement = $("input[name='new-address-complement']").val();
         var cep = $("input[name='new-address-code']").val();
         var phone = $("input[name='new-address-phone']").val();
+        var name = $("input[name='new-address-name']").val();
         
         $.ajax({
             url: "step1",
             method: "POST",
             data: {
+                name: name,
                 status: "new-address",
                 state: state,
                 city: city,

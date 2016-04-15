@@ -44,10 +44,24 @@ $(document).on("click", "button[data-id='new-address']", function(){
     address.new();
 });
 
-//CEP TRIGGER
+// CEP TRIGGER
 $(document).on("keyup", "input[name='new-address-code']", function(){  
     if ( $(this).val().length == 9 )
         address.cep($(this).val());
+});
+
+// MORE FEATURE TRIGGER
+$(document).on("click", "button[data-id='more-feature']", function(){
+    feature.more($(this));   
+});
+
+// REMOVE FEATURE TRIGGEr
+$(document).on("click", "button[data-id='remove-feature']", function(){
+    feature.remove($(this));   
+});
+
+$(document).on("submit", "form[name='product-form']", function(){
+    feature.submit();   
 });
 
 

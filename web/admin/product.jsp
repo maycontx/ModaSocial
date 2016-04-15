@@ -4,7 +4,8 @@
         <h1>Produtos (${allProducts.size()}) <small>Gerenciamento</small></h1>
     </div>
     <h3><span class="glyphicon glyphicon-plus"></span> Novo produto</h3>
-    <form method="POST" action="product-manager">        
+    <form name="product-form" method="POST" action="product-manager">        
+        <input type="hidden" name="feature-amount" value="0">
         <div class="form-row">
             <div class="col-lg-3">
                 <label>Nome</label>
@@ -56,6 +57,36 @@
                 <textarea class="form-control" rows="5" name="product-description" placeholder="Descrição..."><c:if test="${target != null}">${target.descricao}</c:if></textarea>
             </div>
         </div>
+        <c:if test="${target == null}">
+            <div class="form-row">
+                <div class="col-lg-3" data-id="feature" data-info="first">
+                    <div class="col-lg-10">
+                        <label>Característica</label>
+                        <input name="feature-field" class="form-control" placeholder="Campo">                
+                        <input name="feature-value" class="form-control" placeholder="Valor">
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" data-id="more-feature"><span class="glyphicon glyphicon-plus"></span></button>
+                    </div>               
+                </div>
+            </div> 
+        </c:if>
+        <c:if test="${target != null}">
+              <div class="form-row">
+                <c:forEach items="${target.getCaracteristicaList()}" var="feature">
+                    <div class="col-lg-3" data-id="feature" data-info="first">
+                        <div class="col-lg-10">
+                            <label>Característica</label>
+                            <input name="feature-field" class="form-control" placeholder="Campo" value="${feature.campo}">                
+                            <input name="feature-value" class="form-control" placeholder="Valor" value="${feature.valor}">
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" data-id="more-feature"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>               
+                    </div>
+                </c:forEach>                  
+            </div>        
+        </c:if>
         <div class="form-row">
             <div class="col-lg-12">
                 <c:if test="${target == null}"> 

@@ -260,7 +260,10 @@ public class Produto implements Serializable {
     
     /* OTHERS METHODS */
     public String getShortDescription(){
-        return this.descricao.substring(0, 300) + "...";
+        if ( this.descricao.length() > 300 ) 
+            return this.descricao.substring(0, 300) + "...";
+        else
+            return this.descricao;
     }
     
     public String getRateBalance(){

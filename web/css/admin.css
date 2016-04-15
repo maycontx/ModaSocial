@@ -67,6 +67,21 @@
     margin-top: 10px;
 }
 
+.product-header .form-row div[class^='col-lg']{
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.product-header .form-row .col-lg-3 .col-lg-2{
+    position: relative;
+}
+
+.product-header .form-row .col-lg-3 .col-lg-2 button{
+    position: absolute;
+    top: 50px;
+    padding: 5px;
+}    
+
 .product-body{
     float: left;
     width: 100%;

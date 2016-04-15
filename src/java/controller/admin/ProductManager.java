@@ -1,5 +1,6 @@
 package controller.admin;
 
+import dao.CaracteristicaJpaController;
 import dao.CategoriaJpaController;
 import dao.FornecedorJpaController;
 import dao.ProdutoJpaController;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Caracteristica;
 import model.Produto;
 
 @WebServlet(name = "ProductManager", urlPatterns = {"/product-manager"})
@@ -35,7 +37,7 @@ public class ProductManager extends HttpServlet {
         double price = Double.parseDouble(priceString);
         String stock = request.getParameter("product-stock");
         String status = request.getParameter("product-status");
-        String description = request.getParameter("product-description");        
+        String description = request.getParameter("product-description");       
         
         product.setNome(name);
         product.setMarca(brand);
@@ -69,7 +71,22 @@ public class ProductManager extends HttpServlet {
             
             Produto product = new Produto();
             product = this.constructProduct(request, product);
-            new ProdutoJpaController(emf).create(product);
+            product = new ProdutoJpaController(emf).create(product);
+            
+            int featureAmount = Integer.parseInt(request.getParameter("feature-amount"));
+            for ( int i = 1; i <= featureAmount - 1; i++ ){
+                
+                String field = request.getParameter("feature-field" + i);
+                String value = request.getParameter("feature-value" + i);
+                
+                Caracteristica feature = new Caracteristica();
+                feature.setCampo(field);
+                feature.setValor(value);
+                feature.setProduto(product);
+                
+                new CaracteristicaJpaController(emf).create(feature);
+                
+            }
             
             RequestDispatcher rd = request.getRequestDispatcher("admin-template.jsp");
         

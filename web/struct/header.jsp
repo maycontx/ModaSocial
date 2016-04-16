@@ -13,6 +13,7 @@
         <div class="menu-item">
             <span class="glyphicon glyphicon-menu-hamburger"></span>
         </div>
+        <div class="menu-item"><a href="home">Home</a></div>
         <c:if test="${user == null}"><div class="menu-item" data-id="register-open">Cadastrar</div></c:if>
         <c:if test="${user == null}"><div class="menu-item" data-id="login-open">Entrar</div></c:if>
         <c:if test="${user != null}"><div class="menu-item"><a href="profile">Minha conta</a></div></c:if>

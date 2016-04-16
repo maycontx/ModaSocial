@@ -1,7 +1,10 @@
 package controller;
 
+import dao.ProdutoJpaController;
 import helper.Session;
 import java.io.IOException;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +17,15 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+        
         String emailCookie = Session.findCookie(request);
 
         RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
         if (emailCookie != null) {
             request.setAttribute("emailCookie", emailCookie);
         }
+        request.setAttribute("sortProducts", new ProdutoJpaController(emf).findSortProdutos());
         request.setAttribute("page", "home");
 
         rd.forward(request, response);

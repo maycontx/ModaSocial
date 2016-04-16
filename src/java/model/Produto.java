@@ -288,6 +288,10 @@ public class Produto implements Serializable {
         
         List<Avaliacao> ratings = this.getAvaliacaoList();
         
+        if ( ratings.size() == 0 ){
+            return  "Nenhuma avaliação deste produto.";
+        }
+        
         double total = ratings.size();
         double nota1 = 0;
         double nota2 = 0;
@@ -326,5 +330,6 @@ public class Produto implements Serializable {
     public void addProductInShoppingCart(HttpServletRequest request){
         Session.addProductInShoppingCart(this, request);
     }
+   
     
 }

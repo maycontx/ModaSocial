@@ -541,5 +541,14 @@ public class ProdutoJpaController implements Serializable {
         return q.getResultList();
         
     }
+    
+    public List<Produto> findAllActiveProducts() {
+        String query = "SELECT p FROM Produto p WHERE p.status = 'Ativo'";
+        
+        Query q = getEntityManager().createQuery(query);       
+        
+        return q.getResultList();
+        
+    }
 
 }

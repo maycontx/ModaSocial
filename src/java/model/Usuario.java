@@ -1,13 +1,16 @@
 package model;
 
+import dao.ProdutoJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -278,6 +282,46 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "model.Usuario[ idusuario=" + idusuario + " ]";
+    }
+    
+    public List<Produto> getPreferenceProduct(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+        
+        ProdutoJpaController data = new ProdutoJpaController(emf);
+        
+        if ( this.preferencia == null )
+            return data.findAllActiveProducts();
+        else{
+            List<Produto> all = data.findAllActiveProducts();            
+            List<Produto> preferenceList = new ArrayList<Produto>();
+            
+            String[] styles = this.preferencia.getEstilo().split(",");
+            String[] collections = this.preferencia.getColecao().split(",");
+            
+            for ( Produto p : all ){
+                boolean breakCicle = false;
+                for ( String s : styles ){
+                    if ( p.getEstilo().equals(s) ){
+                            preferenceList.add(p);
+                            breakCicle = true;
+                        } 
+                    }
+                
+                if ( breakCicle == false ){
+                    for ( String c : collections ){                    
+                        if ( p.getColecao().equals(c) )                       
+                            preferenceList.add(p);                                               
+                    }      
+                }
+                
+                if ( preferenceList.size() == 8 )
+                    break;
+                       
+            }
+            
+            return preferenceList;
+        
+        }        
     }
     
 }

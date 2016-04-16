@@ -8,7 +8,9 @@ import javax.persistence.Persistence;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Carrinho;
 import model.Produto;
+import model.RelProdutoCarrinho;
 import model.Usuario;
 
 /**
@@ -77,13 +79,38 @@ public class Session {
     }
     
     public static void addProductInShoppingCart(Produto produto, HttpServletRequest request){
-        List<Produto> shoppingCart = (List<Produto>) request.getSession().getAttribute("shoppingCart");
         
-        if(shoppingCart == null){
-            shoppingCart = new ArrayList<Produto>();
+        Carrinho cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
+        if(cart == null){
+            cart = new Carrinho("Ativo");
         }
-        shoppingCart.add(produto);
-        request.getSession().setAttribute("shoppingCart", shoppingCart);
+        
+        List<RelProdutoCarrinho> rel = cart.getRelProdutoCarrinhoList();
+        if(rel == null){
+            rel = new ArrayList<RelProdutoCarrinho>();
+        }
+        
+        RelProdutoCarrinho relProduct = null;
+        
+        boolean existingProduct = false;
+        for(RelProdutoCarrinho r: rel){
+            if(r.getProduto().getIdproduto() == produto.getIdproduto()){
+                r.setQuantidade(r.getQuantidade() + 1);
+                existingProduct = true;
+            }
+        }
+        
+        if(!existingProduct){
+            relProduct = new RelProdutoCarrinho();
+            relProduct.setCarrinho(cart);
+            relProduct.setProduto(produto);
+            relProduct.setQuantidade(1);
+            
+            rel.add(relProduct);
+        }
+        
+        cart.setRelProdutoCarrinhoList(rel);
+        request.getSession().setAttribute("shoppingCart", cart);
     }
 
 }

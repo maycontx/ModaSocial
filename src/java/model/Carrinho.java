@@ -54,6 +54,10 @@ public class Carrinho implements Serializable {
 
     public Carrinho() {
     }
+    
+    public Carrinho(String status) {
+        this.status = status;
+    }
 
     public Carrinho(Integer idcarrinho) {
         this.idcarrinho = idcarrinho;

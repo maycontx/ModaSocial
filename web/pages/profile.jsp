@@ -67,45 +67,38 @@
             </div>
             <div class="col-lg-9 preferences">
                 <div class="profile-component-title">
-                    <h3>Preferências</h3>
-                    <div class="form-row">
-                        <label class="field-title">Escolher produtos:</label>
-                        <span><input type="checkbox" name="product1"> Por estilos</span>
-                        <span><input type="checkbox" name="product2"> Por preços</span>
-                        <span><input type="checkbox" name="product3"> Por coleções</span>
-                        <span><input type="checkbox" name="product4"> Por marcas  </span>                 
-                    </div>
-                    <div class="form-row">
-                        <label class="field-title">Estilo de preferência:</label>
-                        <span><input type="checkbox" name="style1"> Despojado</span>
-                        <span><input type="checkbox" name="style2"> Formal</span>
-                        <span><input type="checkbox" name="style3"> Casual</span>
-                        <span><input type="checkbox" name="style4"> Todos</span>                 
-                    </div>
-                    <div class="form-row">
-                        <label class="field-title">Coleções de preferência:</label>
-                        <span><input type="checkbox" name="style1"> Verão</span>
-                        <span><input type="checkbox" name="style2"> Primavera</span>
-                        <span><input type="checkbox" name="style3"> Inverno</span>
-                        <span><input type="checkbox" name="style4"> Outono</span>
-                        <span><input type="checkbox" name="style4"> Todas</span>
-                    </div>
-                    <div class="form-row">
-                        <label class="field-title">Preferência de notificações:</label>
-                        <span><input type="checkbox" name="style1"> Novas promoções</span>
-                        <span><input type="checkbox" name="style2"> Novos produtos</span>
-                        <span><input type="checkbox" name="style3"> Novas coleções</span>
-                        <span><input type="checkbox" name="style4"> Novas marcas</span>                    
-                    </div>
-                    <div class="form-row">
-                        <label class="field-title">Receber e-mails:</label>
-                        <span><input type="radio" name="pref-email" value="emailYes"> Todos</span>
-                        <span><input type="radio" name="pref-email" value="emailSome"> Os mais importantes</span>
-                        <span><input type="radio" name="pref-email" value="emailNo"> Nenhum</span>                                        
-                    </div>
-                    <div class="form-row">
-                        <input type="submit" class="btn btn-primary" value="Enviar preferências">
-                    </div>
+                    <form action="preference" method="GET">
+                        <h3>Preferências</h3>                  
+                        <div class="form-row" data-id="style" data-info="${user.preferencia.estilo}">
+                            <label class="field-title">Estilo de preferência:</label>
+                            <span><input type="checkbox" name="Despojado"> Despojado</span>
+                            <span><input type="checkbox" name="Formal"> Formal</span>
+                            <span><input type="checkbox" name="Casual"> Casual</span>                                      
+                        </div>
+                        <div class="form-row" data-id="collection" data-info="${user.preferencia.colecao}">
+                            <label class="field-title">Coleções de preferência:</label>
+                            <span><input type="checkbox" name="Verão"> Verão</span>
+                            <span><input type="checkbox" name="Primavera"> Primavera</span>
+                            <span><input type="checkbox" name="Inverno"> Inverno</span>
+                            <span><input type="checkbox" name="Outono"> Outono</span>                        
+                        </div>
+                        <div class="form-row">
+                            <label class="field-title">Preferência de notificações:</label>
+                            <span><input type="checkbox" name="style1"> Novas promoções</span>
+                            <span><input type="checkbox" name="style2"> Novos produtos</span>
+                            <span><input type="checkbox" name="style3"> Novas coleções</span>
+                            <span><input type="checkbox" name="style4"> Novas marcas</span>                    
+                        </div>
+                        <div class="form-row">
+                            <label class="field-title">Receber e-mails:</label>
+                            <span><input type="radio" name="pref-email" value="emailYes"> Todos</span>
+                            <span><input type="radio" name="pref-email" value="emailSome"> Os mais importantes</span>
+                            <span><input type="radio" name="pref-email" value="emailNo"> Nenhum</span>                                        
+                        </div>
+                        <div class="form-row">
+                            <input type="submit" class="btn btn-primary" value="Enviar preferências">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

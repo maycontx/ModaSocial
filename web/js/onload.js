@@ -15,4 +15,24 @@ $(document).ready(function(){
        });
     });
     
+    var style = $("div[data-id='style']").attr("data-info");
+    var styleSplited = style.split(",");
+    $("input[type='checkbox']").each(function(){       
+       for ( var i = 0; i < styleSplited.length; i++ ){       
+           if ( $(this).attr("name") == styleSplited[i] )
+               $(this).attr("checked", true);
+       }
+
+    });
+    
+    var collection = $("div[data-id='collection']").attr("data-info");
+    var collectionSplited = collection.split(",");
+    $("input[type='checkbox']").each(function(){        
+       for ( var i = 0; i < collectionSplited.length; i++ ){       
+           if ( $(this).attr("name") == collectionSplited[i] )
+               $(this).attr("checked", true);
+       }
+
+    });
+    
 });

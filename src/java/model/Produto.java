@@ -71,6 +71,8 @@ public class Produto implements Serializable {
     private int estoque;
     @Column(length = 7)
     private String status;
+    private String colecao;
+    private String estilo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
     private List<Caracteristica> caracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
@@ -171,6 +173,22 @@ public class Produto implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getColecao() {
+        return colecao;
+    }
+
+    public void setColecao(String colecao) {
+        this.colecao = colecao;
+    }
+
+    public String getEstilo() {
+        return estilo;
+    }
+
+    public void setEstilo(String estilo) {
+        this.estilo = estilo;
+    }    
 
     @XmlTransient
     public List<Caracteristica> getCaracteristicaList() {

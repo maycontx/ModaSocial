@@ -9,6 +9,7 @@ import dao.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -37,6 +38,8 @@ public class ProductManager extends HttpServlet {
         double price = Double.parseDouble(priceString);
         String stock = request.getParameter("product-stock");
         String status = request.getParameter("product-status");
+        String collection = request.getParameter("product-collection");
+        String style = request.getParameter("product-style");
         String description = request.getParameter("product-description");       
         
         product.setNome(name);
@@ -46,6 +49,8 @@ public class ProductManager extends HttpServlet {
         product.setPreco(BigDecimal.valueOf(price));
         product.setEstoque(Integer.parseInt(stock));
         product.setStatus(status);
+        product.setColecao(collection);
+        product.setEstilo(style);
         product.setDescricao(description);
         
         return product;
@@ -133,6 +138,27 @@ public class ProductManager extends HttpServlet {
                     Produto product = new ProdutoJpaController(emf).findProduto(id);                    
                     
                     product = this.constructProduct(request, product);
+                    
+                    List<Caracteristica> featureList = new CaracteristicaJpaController(emf).findAllFeatureByProduct(product);
+                    for ( Caracteristica f : featureList ){
+                        new CaracteristicaJpaController(emf).destroy(f.getIdcaracteristica());
+                    }
+                    
+                    
+                    int featureAmount = Integer.parseInt(request.getParameter("feature-amount"));
+                    for ( int i = 1; i <= featureAmount - 1; i++ ){
+
+                        String field = request.getParameter("feature-field" + i);
+                        String value = request.getParameter("feature-value" + i);
+
+                        Caracteristica feature = new Caracteristica();
+                        feature.setCampo(field);
+                        feature.setValor(value);
+                        feature.setProduto(product);
+
+                        new CaracteristicaJpaController(emf).create(feature);
+
+                    }
                     
                     new ProdutoJpaController(emf).edit(product);
                 } catch (NonexistentEntityException ex) {

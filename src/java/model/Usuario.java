@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -80,6 +82,9 @@ public class Usuario implements Serializable {
     private List<Endereço> endereçoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Avaliacao> avaliacaoList;
+    @JoinColumn(name = "preferencia", referencedColumnName = "idpreferencia")
+    @ManyToOne
+    private Preferencia preferencia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Carrinho> carrinhoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -222,6 +227,14 @@ public class Usuario implements Serializable {
 
     public void setAvaliacaoList(List<Avaliacao> avaliacaoList) {
         this.avaliacaoList = avaliacaoList;
+    }
+
+    public Preferencia getPreferencia() {
+        return preferencia;
+    }
+
+    public void setPreferencia(Preferencia preferencia) {
+        this.preferencia = preferencia;
     }
 
     @XmlTransient

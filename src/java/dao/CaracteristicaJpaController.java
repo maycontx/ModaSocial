@@ -165,4 +165,13 @@ public class CaracteristicaJpaController implements Serializable {
         }
     }
     
+    public List<Caracteristica> findAllFeatureByProduct(Produto product){
+        String query = "SELECT f FROM Caracteristica f WHERE f.produto = :product";
+        
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("product", product);
+        
+        return q.getResultList();
+    }
+    
 }

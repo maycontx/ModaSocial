@@ -49,7 +49,24 @@
                     <option value="Ativo">Ativo</option>
                     <option value="Inativo">Inativo</option>                   
                 </select>
-            </div>            
+            </div>
+            <div class="col-lg-2">
+                <label>Coleção</label>
+                <select class="form-control" name="product-collection">
+                    <option value="Verão">Verão</option>
+                    <option value="Primavera">Primavera</option>
+                    <option value="Inverno">Inverno</option>   
+                    <option value="Outono">Outono</option>   
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <label>Estilo</label>
+                <select class="form-control" name="product-style">
+                    <option value="Formal">Formal</option>
+                    <option value="Despojado">Despojado</option>
+                    <option value="Casual">Casual</option> 
+                </select>
+            </div>  
         </div>
         <div class="form-row">
             <div class="col-lg-12">
@@ -73,15 +90,25 @@
         </c:if>
         <c:if test="${target != null}">
               <div class="form-row">
-                <c:forEach items="${target.getCaracteristicaList()}" var="feature">
-                    <div class="col-lg-3" data-id="feature" data-info="first">
+                  <div class="col-lg-3" data-id="feature" data-info="first">
+                        <div class="col-lg-10">
+                            <label>Característica</label>
+                            <input name="feature-field" class="form-control" placeholder="Campo">                
+                            <input name="feature-value" class="form-control" placeholder="Valor">
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" data-id="more-feature"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>               
+                    </div>
+                  <c:forEach items="${target.getCaracteristicaList()}" var="feature">
+                    <div class="col-lg-3" data-id="feature">
                         <div class="col-lg-10">
                             <label>Característica</label>
                             <input name="feature-field" class="form-control" placeholder="Campo" value="${feature.campo}">                
                             <input name="feature-value" class="form-control" placeholder="Valor" value="${feature.valor}">
                         </div>
                         <div class="col-lg-2">
-                            <button type="button" data-id="more-feature"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button type="button" data-id="remove-feature" style="background-color: rgb(165, 78, 78)"><span class="glyphicon glyphicon-remove"></span></button>
                         </div>               
                     </div>
                 </c:forEach>                  

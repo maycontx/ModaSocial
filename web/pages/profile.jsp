@@ -40,7 +40,9 @@
                                 <td><a href="#">${order.endereco.bairro}</a></td>
                                 <td>${order.freteTipo}</td>
                                 <td>${order.freteValor}</td>
-                                <td>${order.valor}</td>
+                                <c:forEach items="${order.getPagamentoList()}" var="pay">
+                                    <td>${pay.valor}</td>
+                                </c:forEach>
                             </tr>
                         </c:forEach>
                     </c:forEach>

@@ -3,9 +3,7 @@ package controller;
 import dao.CarrinhoJpaController;
 import dao.ProdutoJpaController;
 import dao.RelProdutoCarrinhoJpaController;
-import helper.Session;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -18,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Carrinho;
 import model.Produto;
-import model.Produto_;
 import model.RelProdutoCarrinho;
-import model.RelProdutoCarrinho_;
 import model.Usuario;
 
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})

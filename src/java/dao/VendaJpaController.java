@@ -37,7 +37,7 @@ public class VendaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Venda venda) {
+    public Venda create(Venda venda) {
         if (venda.getPagamentoList() == null) {
             venda.setPagamentoList(new ArrayList<Pagamento>());
         }
@@ -85,6 +85,8 @@ public class VendaJpaController implements Serializable {
                 em.close();
             }
         }
+        
+        return venda;
     }
 
     public void edit(Venda venda) throws IllegalOrphanException, NonexistentEntityException, Exception {

@@ -18,6 +18,11 @@ $(document).on("click", "span[data-id='remove-product']", function(){
    product.remove($(this)); 
 });
 
+//REMOVE CUPOM
+$(document).on("click", "span[data-id='remove-cupom']", function(){
+   cupom.remove($(this)); 
+});
+
 // SEARCH TRIGGER
 $(document).on("click", "span[data-id='search-trigger']", function(){   
    var form = $("form[name='search-form']");
@@ -64,6 +69,15 @@ $(document).on("submit", "form[name='product-form']", function(){
     feature.submit();   
 });
 
+// CUPOM GENERATE
+$(document).on("click", "button[data-id='cupom-generate']", function(){
+    cupom.generate();   
+});
+
+// BUY TRIGGERS
+$(document).on("click", "div[data-id='address']", function(){
+    address.changeVal($(this));  
+});
 
 
 

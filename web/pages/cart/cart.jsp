@@ -31,16 +31,38 @@
                 <div class="col-lg-2">
                     CEP: 
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <input type="text" class="form-control" name="CEP"> 
                 </div>
                 <div class="col-lg-4">
                     <button type="button" class="btn btn-default">Calcular</button> 
-                </div>
-
+                </div>  
             </div>
+            <div class="delivery-postal">
+                <c:if test="${cart.cupom != null}">
+                    <div class="col-lg-6">
+                        Cupom: ${cart.cupom.codigo}
+                    </div>
+                    <div class="col-lg-6">
+                        Desconto: <strong>${cart.cupom.desconto}%</strong>
+                    </div>
+                </c:if>
+                <c:if test="${cart.cupom == null}">
+                    <form method="POST" action="cupom">
+                        <div class="col-lg-2">
+                            Cupom:
+                        </div>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="cupom-code" type="text">
+                        </div> 
+                        <div class="col-lg-1">
+                            <button type="submit" class="btn btn-primary">Usar</button> 
+                        </div>  
+                    </form>
+                </c:if>                
+            </div>           
             <div class="value-final">
-                Valor total: <span>202020</span>
+                Valor total: <span>${cart.getFinalValue()}</span>
             </div>                    
         </div>
         <div class="cart-btn">

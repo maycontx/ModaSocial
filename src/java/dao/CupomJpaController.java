@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
@@ -15,11 +10,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Cupom;
+import model.Usuario;
 
-/**
- *
- * @author asdfrofl
- */
 public class CupomJpaController implements Serializable {
 
     public CupomJpaController(EntityManagerFactory emf) {
@@ -132,6 +124,19 @@ public class CupomJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    public Cupom findCupomByCode(String code){
+        String query = "SELECT c FROM Cupom c WHERE c.codigo = :code";
+
+        Query q = getEntityManager().createQuery(query);
+        q.setParameter("code", code);       
+
+        try {
+            return (Cupom) q.getSingleResult();
+        } catch (Exception ex) {
+            return null;
         }
     }
     

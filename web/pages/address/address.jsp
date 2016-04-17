@@ -52,8 +52,8 @@
             </ul>
         </div>  
         <c:forEach items="${user.getEndereçoList()}" var="address">            
-            <div class="col-lg-3 btn btn-primary">
-                <input type="radio" name="address" id="${address.idendereço}" autocomplete="off">
+            <div class="col-lg-3 btn btn-primary" data-id="address" data-info="${address.idendereço}" shipping-value="10.00">
+                <input type="radio" name="address" autocomplete="off">
                 <div class="title">${address.nome}</div>
                 <ul class="list-group">
                     <li class="list-group-item">País <span class="badge">${address.pais}</span></li>

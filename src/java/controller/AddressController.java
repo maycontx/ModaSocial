@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CarrinhoJpaController;
 import dao.EndereçoJpaController;
 import dao.UsuarioJpaController;
 import jacontrol.Classes.WebServiceCep;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Carrinho;
 import model.Endereço;
 import model.Usuario;
 
@@ -30,7 +32,9 @@ public class AddressController extends HttpServlet {
         if (user != null){
             user = new UsuarioJpaController(emf).findUsuario(user.getIdusuario());
             request.getSession().setAttribute("user", user);
-        }
+        }        
+        
+        Carrinho cart = new CarrinhoJpaController(emf).findActiveCartByUser(user);
             
         String refresh = request.getParameter("refresh");
         String status = request.getParameter("status");
@@ -78,6 +82,7 @@ public class AddressController extends HttpServlet {
             rd.forward(request, response);
         }else{
             RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
+            request.setAttribute("cart", cart);
             request.setAttribute("page", "address");
             rd.forward(request, response);
         }

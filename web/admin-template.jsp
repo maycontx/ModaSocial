@@ -12,6 +12,9 @@
             <div class="fix-item">
                 <span class="glyphicon glyphicon-gift"></span> <a href="product-manager">Produtos</a>
             </div>
+            <div class="fix-item">
+                <span class="glyphicon glyphicon-barcode"></span> <a href="cupom-manager">Cupons</a>
+            </div>
         </div>
         <div class="admin-content">
             <%

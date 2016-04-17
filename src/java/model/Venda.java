@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Venda.findAll", query = "SELECT v FROM Venda v"),
     @NamedQuery(name = "Venda.findByIdvenda", query = "SELECT v FROM Venda v WHERE v.idvenda = :idvenda"),
-    @NamedQuery(name = "Venda.findByValor", query = "SELECT v FROM Venda v WHERE v.valor = :valor"),
     @NamedQuery(name = "Venda.findByFreteTipo", query = "SELECT v FROM Venda v WHERE v.freteTipo = :freteTipo"),
     @NamedQuery(name = "Venda.findByFreteValor", query = "SELECT v FROM Venda v WHERE v.freteValor = :freteValor")})
 public class Venda implements Serializable {
@@ -44,10 +43,7 @@ public class Venda implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer idvenda;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal valor;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation    
     @Basic(optional = false)
     @Column(name = "frete_tipo", nullable = false, length = 255)
     private String freteTipo;
@@ -70,9 +66,8 @@ public class Venda implements Serializable {
         this.idvenda = idvenda;
     }
 
-    public Venda(Integer idvenda, BigDecimal valor, String freteTipo, BigDecimal freteValor) {
-        this.idvenda = idvenda;
-        this.valor = valor;
+    public Venda(Integer idvenda, String freteTipo, BigDecimal freteValor) {
+        this.idvenda = idvenda;       
         this.freteTipo = freteTipo;
         this.freteValor = freteValor;
     }
@@ -83,15 +78,7 @@ public class Venda implements Serializable {
 
     public void setIdvenda(Integer idvenda) {
         this.idvenda = idvenda;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
+    }   
 
     public String getFreteTipo() {
         return freteTipo;

@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Carrinho.findAll", query = "SELECT c FROM Carrinho c"),
-    @NamedQuery(name = "Carrinho.findByIdcarrinho", query = "SELECT c FROM Carrinho c WHERE c.idcarrinho = :idcarrinho"),
-    @NamedQuery(name = "Carrinho.findByCupom", query = "SELECT c FROM Carrinho c WHERE c.cupom = :cupom")})
+    @NamedQuery(name = "Carrinho.findByIdcarrinho", query = "SELECT c FROM Carrinho c WHERE c.idcarrinho = :idcarrinho")})
 public class Carrinho implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,10 +42,12 @@ public class Carrinho implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer idcarrinho;
-    private Integer cupom;    
+    @JoinColumn(name = "cupom", referencedColumnName = "idcupom", nullable = false)
+    @ManyToOne(optional = false)
+    private Cupom cupom;    
     private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrinho")
-    private List<RelProdutoCarrinho> relProdutoCarrinhoList;
+    private List<RelProdutoCarrinho> relProdutoCarrinhoList;   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrinho")
     private List<Venda> vendaList;
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario", nullable = false)
@@ -71,14 +73,14 @@ public class Carrinho implements Serializable {
         this.idcarrinho = idcarrinho;
     }
 
-    public Integer getCupom() {
+    public Cupom getCupom() {
         return cupom;
     }
 
-    public void setCupom(Integer cupom) {
+    public void setCupom(Cupom cupom) {
         this.cupom = cupom;
     }
-
+    
     @XmlTransient
     public List<RelProdutoCarrinho> getRelProdutoCarrinhoList() {
         return relProdutoCarrinhoList;
@@ -149,6 +151,18 @@ public class Carrinho implements Serializable {
         }
         
         return total;
+        
+    }
+    
+    public double getFinalValue(){
+        
+        if ( this.cupom == null )
+            return this.getTotalValue();
+        else{
+            
+            return this.getTotalValue() - (( this.getTotalValue() * this.cupom.getDesconto()) / 100);
+        
+        } 
         
     }
     

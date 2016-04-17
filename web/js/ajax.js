@@ -80,5 +80,11 @@ var address = {
     
         });
         
+    },
+    changeVal: function(btn){
+        var address = btn.attr("data-info");
+        var shipping = btn.attr("shipping-value");
+        $("input[name='address']").val(address);
+        $("input[name='shipping-value']").val(shipping);
     }
 };

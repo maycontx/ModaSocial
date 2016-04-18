@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import dao.exceptions.IllegalOrphanException;
@@ -16,6 +11,7 @@ import model.Carrinho;
 import model.Endereço;
 import model.Pagamento;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -259,6 +255,22 @@ public class VendaJpaController implements Serializable {
         } finally {
             em.close();
         }
-    }   
+    }
+    
+    public List<Venda> findFilterOrder(Date startDate, Date endDate){
+        String query = "SELECT o FROM Venda o WHERE o.idvenda > 0";
+                if ( startDate != null )
+                query += " AND o.data > :start";
+                if ( endDate != null )        
+                query += " AND o.data < :end";
+
+        Query q = getEntityManager().createQuery(query);
+        if ( startDate != null )
+            q.setParameter("start", startDate);
+        if ( endDate != null ) 
+            q.setParameter("end", endDate);
+
+        return (List<Venda>) q.getResultList();
+    }
     
 }

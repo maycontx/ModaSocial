@@ -1,9 +1,13 @@
-package controller;
+package controller.admin;
 
 import dao.VendaJpaController;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
@@ -14,21 +18,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Venda;
 
-@WebServlet(name = "AdminPanelController", urlPatterns = {"/admin-panel"})
-public class AdminPanelController extends HttpServlet {
+@WebServlet(name = "OrderController", urlPatterns = {"/order-manager"})
+public class OrderController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
-        
-        List<Venda> orders = new VendaJpaController(emf).findVendaEntities();
-        
-        RequestDispatcher rd = request.getRequestDispatcher("admin-template.jsp");        
-        request.setAttribute("orders", orders);
-        request.setAttribute("page", "index");        
-        rd.forward(request, response);
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+          
+            String stringStart = request.getParameter("start-date");
+            String stringEnd = request.getParameter("end-date");
+            
+            Date startDate = null;
+            Date endDate = null;
+            
+            if ( stringStart != null && !stringStart.equals("") )
+                startDate = sdf.parse(stringStart);
+            if ( stringEnd != null && !stringEnd.equals("") )
+                endDate = sdf.parse(stringEnd);
+            
+            List<Venda> orders = new VendaJpaController(emf).findFilterOrder(startDate, endDate);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("admin-template.jsp");           
+            request.setAttribute("orders", orders);
+            request.setAttribute("page", "index");
+            rd.forward(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 

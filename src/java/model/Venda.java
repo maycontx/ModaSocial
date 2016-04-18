@@ -7,6 +7,8 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +23,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -50,6 +54,10 @@ public class Venda implements Serializable {
     @Basic(optional = false)
     @Column(name = "frete_valor", nullable = false, precision = 10, scale = 2)
     private BigDecimal freteValor;
+    @Basic(optional = false)
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
     @JoinColumn(name = "carrinho", referencedColumnName = "idcarrinho", nullable = false)
     @ManyToOne(optional = false)
     private Carrinho carrinho;
@@ -110,6 +118,19 @@ public class Venda implements Serializable {
 
     public void setEndereco(Endereço endereco) {
         this.endereco = endereco;
+    }
+
+    public String getFormatData() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(data);
+    }
+    
+    public Date getData(){
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 
     @XmlTransient

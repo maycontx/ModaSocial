@@ -116,10 +116,14 @@ public class LoginController extends HttpServlet {
                 }
             }
             request.setAttribute("login", true);
+            
+            Carrinho cart = cartData.findActiveCartByUser(user);
+            
+            request.setAttribute("page", "cart");
+            request.setAttribute("cart", cart);
+            rd.forward(request, response);
         }
-
-        request.setAttribute("page", "home");
-        rd.forward(request, response);
+       
 
     }
 

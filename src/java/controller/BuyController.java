@@ -7,6 +7,7 @@ import dao.VendaJpaController;
 import dao.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -54,6 +55,7 @@ public class BuyController extends HttpServlet {
                 order.setEndereco(new EndereçoJpaController(emf).findEndereço(address));
                 order.setFreteTipo("Transportadora");
                 order.setFreteValor(BigDecimal.valueOf(shipping));
+                order.setData(new Date());
 
                 order = new VendaJpaController(emf).create(order);
 

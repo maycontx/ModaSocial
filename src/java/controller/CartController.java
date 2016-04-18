@@ -3,6 +3,7 @@ package controller;
 import dao.CarrinhoJpaController;
 import dao.ProdutoJpaController;
 import dao.RelProdutoCarrinhoJpaController;
+import helper.Session;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,41 +37,55 @@ public class CartController extends HttpServlet {
         String refresh = request.getParameter("refresh");
 
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        Carrinho cart = cartData.findActiveCartByUser(user);
+        
+        Carrinho cart = null;
+        
+        if ( user != null ){
+            cart = cartData.findActiveCartByUser(user);
+        }else{
+            cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
+        }   
+        
 
         if (p != null) {
 
             try {
                 // FIND PRODUCT TO PUT ON THE CART
                 Produto product = productData.findProduto(Integer.parseInt(p));
+                
+                if ( user != null ){
+                    // CHECKING NULL CART 
+                    if (cart == null) {
+                        cart = new Carrinho();
+                        cart.setUsuario(user);
+                        cart.setStatus("ativo");
+                        // CREATE A CART AND PUT HIS ID ON FIRE
+                        cart.setIdcarrinho(cartData.create(cart));
+                    }
+                    
+                     // FIND RELATION ABOUT THAT PRODUCT WITH THAT CART
+                    RelProdutoCarrinho rel = cartProduct.findRelationByProductAndCart(product, cart);
+                    // IF NOT HAVE, CREATE THEN
+                    if (rel == null) {
+                        rel = new RelProdutoCarrinho();
+                        rel.setProduto(product);
+                        rel.setCarrinho(cart);
+                        rel.setQuantidade(1);
+                        cartProduct.create(rel);                
+                    } else 
+                    // IF HAVE JUST SET AMOUNT
+                    {
+                        rel.setQuantidade(rel.getQuantidade() + 1);
+                        cartProduct.edit(rel);
+                    }
+                    
+                    // RELOADING CART
+                    cart = cartData.findActiveCartByUser(user);
 
-                // CHECKING NULL CART 
-                if (cart == null) {
-                    cart = new Carrinho();
-                    cart.setUsuario(user);
-                    cart.setStatus("ativo");
-                    // CREATE A CART AND PUT HIS ID ON FIRE
-                    cart.setIdcarrinho(cartData.create(cart));
+                }else{
+                    Session.addProductInShoppingCart(product, request, -1);
+                    cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
                 }
-
-                // FIND RELATION ABOUT THAT PRODUCT WITH THAT CART
-                RelProdutoCarrinho rel = cartProduct.findRelationByProductAndCart(product, cart);
-                // IF NOT HAVE, CREATE THEN
-                if (rel == null) {
-                    rel = new RelProdutoCarrinho();
-                    rel.setProduto(product);
-                    rel.setCarrinho(cart);
-                    rel.setQuantidade(1);
-                    cartProduct.create(rel);                
-                } else 
-                // IF HAVE JUST SET AMOUNT
-                {
-                    rel.setQuantidade(rel.getQuantidade() + 1);
-                    cartProduct.edit(rel);
-                }
-
-                // RELOADING CART
-                cart = cartData.findActiveCartByUser(user);
                 
                 RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
 
@@ -88,34 +103,47 @@ public class CartController extends HttpServlet {
         } else if (status != null) {
             
             if ( status.equals("amountChange") ){
-                try {
-                    Integer newValue = Integer.parseInt(request.getParameter("value"));
-                    Produto product = productData.findProduto(Integer.parseInt(request.getParameter("product")));
+                Produto product = productData.findProduto(Integer.parseInt(request.getParameter("product")));
+                Integer newValue = Integer.parseInt(request.getParameter("value")); 
+                if ( user != null ){
+                    try {                                           
 
-                    RelProdutoCarrinho rel = cartProduct.findRelationByProductAndCart(product, cart);
+                        RelProdutoCarrinho rel = cartProduct.findRelationByProductAndCart(product, cart);
 
-                    if ( newValue < 1 ){
-                        cartProduct.destroy(rel.getIdrelProdutoCarrinho());
-                    }else{
-                        rel.setQuantidade(newValue);
-                        cartProduct.edit(rel);
-                    }                    
+                        if ( newValue < 1 ){
+                            cartProduct.destroy(rel.getIdrelProdutoCarrinho());
+                        }else{
+                            rel.setQuantidade(newValue);
+                            cartProduct.edit(rel);
+                        }                    
 
-                } catch (Exception ex) {
-                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    Session.addProductInShoppingCart(product, request, newValue);
+                    cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
                 }
+                
+               
             }
 
         }else if (refresh != null && refresh.equals("true")) {
-            cart = cartData.findActiveCartByUser(user);
-            
+            if ( user != null )
+                cart = cartData.findActiveCartByUser(user);
+            else
+                cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
+                
             RequestDispatcher rd = request.getRequestDispatcher("pages/cart/cart.jsp");
             request.setAttribute("cart", cart);
             rd.forward(request, response);
         }
         else{
 
-            cart = cartData.findActiveCartByUser(user);
+            if ( user != null )
+                cart = cartData.findActiveCartByUser(user);
+            else
+                cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
 
             RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
 

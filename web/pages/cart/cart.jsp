@@ -66,7 +66,8 @@
             </div>                    
         </div>
         <div class="cart-btn">
-            <a href="step1"><button class="btn btn-success buy"><i class="fa fa-cart-arrow-down"></i> Finalizar compra</button></a>
+            <c:if test="${user != null}"><a href="step1"><button class="btn btn-success buy"><i class="fa fa-cart-arrow-down"></i> Finalizar compra</button></a></c:if>
+            <c:if test="${user == null}"><div class="menu-item" data-id="login-open"><button class="btn btn-success">Entre</button></div></c:if>
         </div>
     </c:if>
     <c:if test="${cart.getRelProdutoCarrinhoList().size() <= 0}">

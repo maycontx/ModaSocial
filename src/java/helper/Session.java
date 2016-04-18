@@ -78,11 +78,11 @@ public class Session {
         return login;
     }
     
-    public static void addProductInShoppingCart(Produto produto, HttpServletRequest request){
+    public static void addProductInShoppingCart(Produto produto, HttpServletRequest request, int amount){
         
         Carrinho cart = (Carrinho) request.getSession().getAttribute("shoppingCart");
         if(cart == null){
-            cart = new Carrinho("Ativo");
+            cart = new Carrinho();
         }
         
         List<RelProdutoCarrinho> rel = cart.getRelProdutoCarrinhoList();
@@ -95,7 +95,17 @@ public class Session {
         boolean existingProduct = false;
         for(RelProdutoCarrinho r: rel){
             if(r.getProduto().getIdproduto() == produto.getIdproduto()){
-                r.setQuantidade(r.getQuantidade() + 1);
+                if ( amount == -1 )
+                    r.setQuantidade(r.getQuantidade() + 1);
+                else if ( amount == 0 ){
+                    rel.remove(r);
+                    existingProduct = true;
+                    break;
+                }
+                    
+                else
+                    r.setQuantidade(amount);
+                
                 existingProduct = true;
             }
         }

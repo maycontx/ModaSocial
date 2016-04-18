@@ -328,7 +328,7 @@ public class Produto implements Serializable {
     }
     
     public void addProductInShoppingCart(HttpServletRequest request){
-        Session.addProductInShoppingCart(this, request);
+        Session.addProductInShoppingCart(this, request, -1);
     }
    
     

@@ -64,6 +64,12 @@ public class LoginController extends HttpServlet {
                 Carrinho cartUser = cartData.findActiveCartByUser(user);
                 List<RelProdutoCarrinho> relCartSession = cartSession.getRelProdutoCarrinhoList();
                 
+                //PASSANDO RELACAO DA SESSAO PARA LISTA AUXILIAR
+                List<RelProdutoCarrinho> relCartAux = new ArrayList<RelProdutoCarrinho>();
+                for(RelProdutoCarrinho relSession : relCartSession){
+                    relCartAux.add(relSession);
+                }
+                
                 if (cartUser != null) {
                     
                     //LISTA COM PRODUTOS DO CARRINHO DO BD
@@ -72,34 +78,43 @@ public class LoginController extends HttpServlet {
                     for (RelProdutoCarrinho relSession : relCartSession) {
                         for (RelProdutoCarrinho relUser : relCartUser) {
                             
-                            //SE O ID É IGUAL AUMENTA A QTD
+                            //O ID É =
                             if (relSession.getProduto().getIdproduto() == relUser.getProduto().getIdproduto()) {
+                                //REMOVE DA LSTA AUX A RELAÇÃO QUE JA FOI ENCOTRADA
+                                relCartAux.remove(relSession);
+                                // AUMENTA A QTD
                                 relUser.setQuantidade(relUser.getQuantidade() + relSession.getQuantidade());
                                 try {
                                     cartProduct.edit(relUser);
                                 } catch (Exception ex) {
                                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                            }else{
-                                //INSERE O PRODUTO NA RELAÇÃO DO CARRINHO
                             }
+                        }
+                    }
+                    //INSERE COMO NOVO PRODUTO OS QUE NAO FORAM ENCONTRADOS MA RELACAO EXISTENTE
+                    if(relCartAux.size() > 0){
+                        for(RelProdutoCarrinho r: relCartAux){
+                            r.setCarrinho(cartUser);
+                            cartProduct.create(r);
                         }
                     }
 
                 } else {
+                    //CRIA NOVO CARRINHO
                     cartUser = new Carrinho();
                     cartUser.setUsuario(user);
                     cartUser.setStatus("Ativo");
                     cartData.create(cartUser);
-
+                    //RECUPERA CARRINHO INSERIDO
                     Carrinho cartInserted = new CarrinhoJpaController(emf).findActiveCartByUser(user);
+                    //INSERE RELACAO DA SESSAO
                     for (RelProdutoCarrinho rpc : relCartSession) {
                         rpc.setCarrinho(cartInserted);
                         cartProduct.create(rpc);
                     }
                 }
             }
-
             request.setAttribute("login", true);
         }
 

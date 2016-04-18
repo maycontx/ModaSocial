@@ -5,15 +5,26 @@
  */
 package controller;
 
+import dao.CarrinhoJpaController;
+import dao.RelProdutoCarrinhoJpaController;
+import dao.exceptions.NonexistentEntityException;
 import helper.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Carrinho;
+import model.RelProdutoCarrinho;
 import model.Usuario;
 
 /**
@@ -27,6 +38,10 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
+        CarrinhoJpaController cartData = new CarrinhoJpaController(emf);
+        RelProdutoCarrinhoJpaController cartProduct = new RelProdutoCarrinhoJpaController(emf);
+
         String email = request.getParameter("log-email");
         String password = request.getParameter("log-pass");
         boolean keep = request.getParameter("log-keep") != null;
@@ -35,17 +50,65 @@ public class LoginController extends HttpServlet {
 
         Usuario user = Session.createCookie(keep, email, password, response, request);
         if (user == null) {
+            
             request.setAttribute("login", false);
             request.setAttribute("status", "loginFail");
+            
         } else {
+            
+            //RECUPERA CARRINHO NA SESSAO
+            Carrinho cartSession = (Carrinho) request.getSession().getAttribute("shoppingCart");
+            //SE CARRINHO SESSAO != NULO, RECUPERA DO BD
+            
+            if (cartSession != null) {
+                Carrinho cartUser = cartData.findActiveCartByUser(user);
+                List<RelProdutoCarrinho> relCartSession = cartSession.getRelProdutoCarrinhoList();
+                
+                if (cartUser != null) {
+                    
+                    //LISTA COM PRODUTOS DO CARRINHO DO BD
+                    List<RelProdutoCarrinho> relCartUser = cartUser.getRelProdutoCarrinhoList();
+                    
+                    for (RelProdutoCarrinho relSession : relCartSession) {
+                        for (RelProdutoCarrinho relUser : relCartUser) {
+                            
+                            //SE O ID É IGUAL AUMENTA A QTD
+                            if (relSession.getProduto().getIdproduto() == relUser.getProduto().getIdproduto()) {
+                                relUser.setQuantidade(relUser.getQuantidade() + relSession.getQuantidade());
+                                try {
+                                    cartProduct.edit(relUser);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }else{
+                                //INSERE O PRODUTO NA RELAÇÃO DO CARRINHO
+                            }
+                        }
+                    }
+
+                } else {
+                    cartUser = new Carrinho();
+                    cartUser.setUsuario(user);
+                    cartUser.setStatus("Ativo");
+                    cartData.create(cartUser);
+
+                    Carrinho cartInserted = new CarrinhoJpaController(emf).findActiveCartByUser(user);
+                    for (RelProdutoCarrinho rpc : relCartSession) {
+                        rpc.setCarrinho(cartInserted);
+                        cartProduct.create(rpc);
+                    }
+                }
+            }
+
             request.setAttribute("login", true);
         }
+
         request.setAttribute("page", "home");
         rd.forward(request, response);
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

@@ -147,7 +147,7 @@ public class Carrinho implements Serializable {
         double total = 0;
         
         for ( RelProdutoCarrinho rel : this.getRelProdutoCarrinhoList() ){
-            total += ( Integer.valueOf(rel.getProduto().getPreco().intValue()) * rel.getQuantidade() );
+            total += ( Double.valueOf(rel.getProduto().getPreco().doubleValue()) * rel.getQuantidade() );
         }
         
         return total;

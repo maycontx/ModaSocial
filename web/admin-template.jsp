@@ -8,7 +8,7 @@
                 <a href="home"><span class="glyphicon glyphicon-share-alt"></span> Ir para o site</a>
             </div>
         </div>        
-        <div class="fix-menu">
+        <div class="fix-menu">             
             <div class="fix-item">
                 <span class="glyphicon glyphicon-gift"></span> <a href="product-manager">Produtos</a>
             </div>

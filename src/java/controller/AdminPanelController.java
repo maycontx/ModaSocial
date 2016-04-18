@@ -1,13 +1,18 @@
 package controller;
 
+import dao.VendaJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Venda;
 
 @WebServlet(name = "AdminPanelController", urlPatterns = {"/admin-panel"})
 public class AdminPanelController extends HttpServlet {
@@ -16,10 +21,13 @@ public class AdminPanelController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        RequestDispatcher rd = request.getRequestDispatcher("admin-template.jsp");
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ModaSocialPU");
         
-        request.setAttribute("page", "index");
+        List<Venda> orders = new VendaJpaController(emf).findVendaEntities();
         
+        RequestDispatcher rd = request.getRequestDispatcher("admin-template.jsp");        
+        request.setAttribute("orders", orders);
+        request.setAttribute("page", "index");        
         rd.forward(request, response);
         
     }

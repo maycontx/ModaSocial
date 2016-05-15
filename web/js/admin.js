@@ -62,3 +62,41 @@ var cupom = {
         
     }    
 };
+
+price = {
+    update: function(){
+        var modal = $("#price-modal");
+        
+        var radio1 = $("input[data-id='new']");
+        var radio2 = $("input[data-id='update']");
+        
+        var newStock = $("input[data-id='new-stock']").val();
+        var newPrice = $("input[data-id='new-price']").val();
+        newStock = parseInt(newStock);
+        newPrice = parseFloat(newPrice);
+        
+        var price = $("input[name='product-price']"); 
+        var stock = $("input[name='product-stock']");
+        
+        if ( radio1.prop("checked")){
+            
+            newPrice += (newPrice * (36.25 / 100));
+            price.val(newPrice.toFixed(2));
+            stock.val(newStock);
+            modal.modal("hide");
+            
+        }else{
+            var oldStock = $("input[data-id='old-stock']").val();
+            var oldPrice = $("input[data-id='old-stock']").val();
+            oldStock = parseInt(oldStock);
+            oldPrice = parseFloat(oldPrice);
+            
+            var previewPrice = ((oldStock * oldPrice) + newStock * new Price);
+            previewPrice += (previewPrice * (36.25 / 100));
+            price.val(previewPrice.toFixed(2));
+            stock.val(oldStock + newStock);
+            modal.modal("hide");
+            
+        }
+    }    
+};

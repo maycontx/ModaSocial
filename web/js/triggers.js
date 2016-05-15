@@ -79,5 +79,9 @@ $(document).on("click", "div[data-id='address']", function(){
     address.changeVal($(this));  
 });
 
+$(document).on("click", "button[data-id='save-update-price']", function(){
+    price.update(); 
+});
+
 
 

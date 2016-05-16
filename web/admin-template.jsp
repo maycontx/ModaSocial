@@ -15,6 +15,12 @@
             <div class="fix-item">
                 <span class="glyphicon glyphicon-barcode"></span> <a href="cupom-manager">Cupons</a>
             </div>
+            <div class="fix-item">
+                <span class="glyphicon glyphicon-list-alt"></span> <a href="order-manager">Venda</a>
+            </div>
+            <div class="fix-item">
+                <span class="glyphicon glyphicon-usd"></span> <a href="caixa-manager">Fluxo Caixa</a>
+            </div>
         </div>
         <div class="admin-content">
             <%

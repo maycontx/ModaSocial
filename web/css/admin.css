@@ -100,3 +100,15 @@
 .product-body .table-hover tr td .glyphicon-trash{
     color: #960808;
 }
+
+.caixa-header h4, .caixa-header th{
+    text-align: center;
+    font-weight: bold;
+    
+}
+
+.caixa-header .total{
+    text-align: right;
+    font-weight: bold;
+    
+}

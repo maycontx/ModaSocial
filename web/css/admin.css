@@ -112,3 +112,7 @@
     font-weight: bold;
     
 }
+
+.caixa-header .page-header small{
+    float: right;
+}

@@ -128,8 +128,8 @@
                     <label>Preço</label>
                     <input class="form-control" type="text" name="product-price" placeholder="Preço" <c:if test="${target != null}"> value="${target.preco}" </c:if> >
                 </div>
-                <div class="col-lg-2">
-                    <label>Gerar</label>
+                <div class="col-lg-3">
+                    <label>Gerar preço com base em impostos</label>
                     <button type="button" data-id="generate-price" class="btn btn-success" data-toggle="modal" data-target="#price-modal">Gerar preço</button>
                 </div>
             </div>

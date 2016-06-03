@@ -6,7 +6,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -51,15 +48,23 @@ public class Cartao implements Serializable {
     @Column(nullable = false, length = 255)
     private String nome;
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     private String tipo;
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
-    private String seguranca;
+    private int seguranca;
+    @Basic(optional = false)
+    @Column(nullable = false, length = 255)
+    private String vencimento;
     @Basic(optional = false)
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date vencimento;
+    private int parcelas;
+    @Basic(optional = false)
+    @Column(nullable = false, length = 255)
+    private String nomeEmpresa;
+    @Basic(optional = false)
+    @Column(nullable = false, length = 255)
+    private String cnpjEmpresa;
     @JoinColumn(name = "pagamento", referencedColumnName = "idpagamento", nullable = false)
     @ManyToOne(optional = false)
     private Pagamento pagamento;
@@ -71,15 +76,19 @@ public class Cartao implements Serializable {
         this.idcartao = idcartao;
     }
 
-    public Cartao(Integer idcartao, String numero, String nome, String tipo, String seguranca, Date vencimento) {
+    public Cartao(Integer idcartao, String numero, String nome, String tipo, int seguranca, String vencimento, int parcelas, String nomeEmpresa, String cnpjEmpresa, Pagamento pagamento) {
         this.idcartao = idcartao;
         this.numero = numero;
         this.nome = nome;
         this.tipo = tipo;
         this.seguranca = seguranca;
         this.vencimento = vencimento;
+        this.parcelas = parcelas;
+        this.nomeEmpresa = nomeEmpresa;
+        this.cnpjEmpresa = cnpjEmpresa;
+        this.pagamento = pagamento;
     }
-
+    
     public Integer getIdcartao() {
         return idcartao;
     }
@@ -112,20 +121,44 @@ public class Cartao implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getSeguranca() {
+    public int getSeguranca() {
         return seguranca;
     }
 
-    public void setSeguranca(String seguranca) {
+    public void setSeguranca(int seguranca) {
         this.seguranca = seguranca;
     }
 
-    public Date getVencimento() {
+    public String getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(Date vencimento) {
+    public void setVencimento(String vencimento) {
         this.vencimento = vencimento;
+    }
+
+    public int getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(int parcelas) {
+        this.parcelas = parcelas;
+    }
+
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
+    }
+
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getCnpjEmpresa() {
+        return cnpjEmpresa;
+    }
+
+    public void setCnpjEmpresa(String cnpjEmpresa) {
+        this.cnpjEmpresa = cnpjEmpresa;
     }
 
     public Pagamento getPagamento() {

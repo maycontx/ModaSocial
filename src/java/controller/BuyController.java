@@ -97,12 +97,12 @@ public class BuyController extends HttpServlet {
 
                 String result = WebServiceCart.checkCard(card, payment);
                 if (result.equals("AUTORIZADO")) {
-                    
+
                     new CartaoJpaController(emf).create(card);
                     //falta mudar status do pagamento
-                    
+
                     RequestDispatcher rd = request.getRequestDispatcher("template.jsp");
-                    request.setAttribute("page", "profile");
+                    request.setAttribute("page", "order");
                     rd.forward(request, response);
                 }
             }

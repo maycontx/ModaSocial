@@ -1,240 +1,137 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="caixa-header">
-    <div class="page-header">
+<div class="product-header">
+    <div class="page-header" style="width: 100%; float: left;">
         <h1>Fluxo Caixa  <small>Gerenciamento</small></h1>
+        <h3><span class="glyphicon glyphicon-plus"></span> Nova semana</h3>
+        <form name="cupom-form" method="POST" action="caixa-manager"> 
+            <h4 style="margin-top: 20px; float: left; margin-bottom: -10px;">Período</h4>
+            <div class="form-row">                
+                <div class="col-lg-3">
+                    <label>Período Inicial</label>
+                    <input class="form-control" type="date" name="fluxo-dateStart" data-reactid="cupom-generate" placeholder="Código" >
+                </div>
+                <div class="col-lg-3">
+                    <label>Período Final</label>
+                    <input class="form-control" type="date" name="fluxo-dateEnd" data-reactid="cupom-generate" placeholder="Código" >
+                </div>  
+            </div>
+            <h4 style="margin-top: 20px; float: left; margin-bottom: -10px;">Entradas</h4>
+            <div class="form-row">
+                <div class="col-lg-2">
+                    <label>Saldo inicial</label>
+                    <input class="form-control" type="text" name="fluxo-cash" data-reactid="cupom-generate" value="0" >
+                </div>
+                <div class="col-lg-2">
+                    <label>Vendas</label>
+                    <input class="form-control" type="text" name="fluxo-sells" data-reactid="cupom-generate" value="0" >
+                </div> 
+                <div class="col-lg-2">
+                    <label>Outros</label>
+                    <input class="form-control" type="text" name="fluxo-others" data-reactid="cupom-generate" value="0" >
+                </div> 
+            </div>
+            <h4 style="margin-top: 20px; float: left; margin-bottom: -10px;">Saídas</h4>
+            <div class="form-row">
+                <div class="col-lg-2">
+                    <label>Fornecedor</label>
+                    <input class="form-control" type="text" name="fluxo-seller-tax" data-reactid="cupom-generate" value="0" >
+                </div>
+                <div class="col-lg-2">
+                    <label>Água/Luz</label>
+                    <input class="form-control" type="text" name="fluxo-little-tax" data-reactid="cupom-generate" value="0" >
+                </div> 
+                <div class="col-lg-2">
+                    <label>Telefone/Intenet</label>
+                    <input class="form-control" type="text" name="fluxo-phone-tax" data-reactid="cupom-generate" value="0" >
+                </div>
+                <div class="col-lg-2">
+                    <label>Combustível</label>
+                    <input class="form-control" type="text" name="fluxo-gasoline-tax" data-reactid="cupom-generate" value="0" >
+                </div>
+                <div class="col-lg-2">
+                    <label>Taxas bancárias</label>
+                    <input class="form-control" type="text" name="fluxo-bank-tax" data-reactid="cupom-generate" value="0" >
+                </div> 
+                <div class="col-lg-2">
+                    <label>Materiais</label>
+                    <input class="form-control" type="text" name="fluxo-materials-tax" data-reactid="cupom-generate" value="0" >
+                </div>
+                <div class="col-lg-2">
+                    <label>Equipamentos</label>
+                    <input class="form-control" type="text" name="fluxo-equipment-tax" data-reactid="cupom-generate" value="0" >
+                </div> 
+                <div class="col-lg-2">
+                    <label>Impostos</label>
+                    <input class="form-control" type="text" name="fluxo-tax" data-reactid="cupom-generate" value="0" >
+                </div> 
+            </div>
+            <div class="form-row">
+                <div class="col-lg-12">
+                    <c:if test="${target == null}"> 
+                        <input type="hidden" name="action" value="add-fluxo">
+                        <input type="submit" class="btn btn-primary" value="Adicionar Fluxo">
+                    </c:if>
+                    <c:if test="${target != null}"> 
+                        <input type="hidden" name="action" value="edit-fluxo">
+                        <input type="hidden" name="id" value="${target.idcupom}">
+                        <input type="submit" class="btn btn-primary" value="Editar cupom">
+                        <a href="cupom-manager"><input type="button" class="btn btn-default" value="Cancelar edição"></a>
+                    </c:if>
+                </div>
+            </div>    
+        </form>    
+    </div>
         <h3>Período: Abril 2016</h3>
         <h4>Entradas</h4>
         <table class="table">
-             <tr>
-                 <th></th>
-                 <th colspan="2">Semana 1</th>
-                <th colspan="2">Semana 2</th>
-                <th colspan="2">Semana 3</th>
-                <th colspan="2">Semana 4</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-            </tr>
-            <tr>
-                <td>Saldo Inicial</td>
-                <td>R$ 100,00</td>
-                <td>R$ 150,00</td>
-                <td>R$ 130,00</td>
-                <td>R$ 140,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 500,00</td>
-            </tr>
-            <tr>
-                <td>Vendas à Vista</td>
-                <td>R$ 85,00</td>
-                <td>R$ 110,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 70,00</td>
-                <td>R$ 47,00</td>
-                <td>R$ 60,00</td>
-                <td>R$ 250,00</td> 
-            </tr>
-            <tr>
-                <td>Cheque pré</td>
-                <td>R$ 50,00</td>
-                <td>R$ 70,00</td>
-                <td>R$ 780,00</td>
-                <td>R$ 10,00</td>
-                <td>R$ 54,00</td>
-                <td>R$ 20,00</td>
-                <td>R$ 10,00</td>
-                <td>R$ 78,00</td>
-            </tr>
-            <tr>
-                <td>A receber</td>
-                <td>R$ 10,00</td>
-                <td>R$ 15,00</td>
-                <td>R$ 17,00</td>
-                <td>R$ 14,00</td>
-                <td>R$ 78,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 40,00</td>
-            </tr>
-            <tr>
-                <td>Outros</td>
-                <td>R$ 110,00</td>
-                <td>R$ 120,00</td>
-                <td>R$ 110,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 60,00</td>
-                <td>R$ 90,00</td>
-                <td>R$ 100,00</td>
-            </tr>
-            <tr>
-                <td class="total">Total</td>
-                <td>R$ 455,00</td>
-                <td>R$ 615,00</td>
-                <td>R$ 1267,00</td>
-                <td>R$ 364,00</td>
-                <td>R$ 402,00</td>
-                <td>R$ 328,00</td>
-                <td>R$ 520,00</td>
-                <td>R$ 968,00</td>
-            </tr>
-            
+            <c:forEach items="${entradas}" var="entrada">
+                <tr>                        
+                    <th>Período</th>
+                    <th>Saldo inicial</th>
+                    <th>Vendas</th>
+                    <th>Outros</th>  
+                    <th>Total</th> 
+                </tr>
+                <tr>
+                    <td>De ${entrada.getDateFormat(entrada.dataInicial)} a ${entrada.getDateFormat(entrada.dataFinal)}</td>
+                    <td>R$ ${entrada.saldo}</td>
+                    <td>R$ ${entrada.venda}</td>
+                    <td>R$ ${entrada.outros}</td>
+                    <td>R$ ${entrada.total()}</td>
+                    
+                </tr>  
+            </c:forEach>    
         </table>
         <h4>Saídas</h4>
         <table class="table">
-             <tr>
-                 <th></th>
-                 <th colspan="2">Semana 1</th>
-                <th colspan="2">Semana 2</th>
-                <th colspan="2">Semana 3</th>
-                <th colspan="2">Semana 4</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-                <td>Previsto</td>
-                <td>Realizado</td>
-            </tr>
-            <tr>
-                <td>Fornecedores</td>
-                <td>R$ 100,00</td>
-                <td>R$ 110,00</td>
-                <td>R$ 90,00</td>
-                <td>R$ 140,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 200,00</td>
-            </tr>
-            <tr>
-                <td>Água/Luz</td>
-                <td>R$ 100,00</td>
-                <td>R$ 110,00</td>
-                <td>R$ 130,00</td>
-                <td>R$ 90,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 120,00</td>
-                <td>R$ 110,00</td>
-                <td>R$ 200,00</td> 
-            </tr>
-            <tr>
-                <td>Telefone/Internet</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-                <td>R$ 80,00</td>
-            </tr>
-            <tr>
-                <td>Combustível</td>
-                <td>R$ 100,00</td>
-                <td>R$ 150,00</td>
-                <td>R$ 130,00</td>
-                <td>R$ 140,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 160,00</td>
-                <td>R$ 120,00</td>
-                <td>R$ 189,00</td>
-            </tr>
-            <tr>
-                <td>Taxas bancárias</td>
-                <td>R$ 20,00</td>
-                <td>R$ 30,00</td>
-                <td>R$ 25,00</td>
-                <td>R$ 17,00</td>
-                <td>R$ 43,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 21,00</td>
-                <td>R$ 18,00</td>
-            </tr>
-            <tr>
-                <td>Materiais consumo</td>
-                <td>R$ 100,00</td>
-                <td>R$ 150,00</td>
-                <td>R$ 130,00</td>
-                <td>R$ 140,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 500,00</td>
-            </tr>
-            <tr>
-                <td>Aquisição equipamentos</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-                <td>R$ 0,00</td>
-            </tr>
-            <tr>
-                <td>Impostos</td>
-                <td>R$ 21,00</td>
-                <td>R$ 23,00</td>
-                <td>R$ 32,00</td>
-                <td>R$ 22,00</td>
-                <td>R$ 33,00</td>
-                <td>R$ 43,00</td>
-                <td>R$ 21,00</td>
-                <td>R$ 11,00</td>
-            </tr>
-            <tr>
-                <td>Aluguel</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-                <td>R$ 500,00</td>
-            </tr>
-            <tr>
-                <td>Outros</td>
-                <td>R$ 100,00</td>
-                <td>R$ 150,00</td>
-                <td>R$ 130,00</td>
-                <td>R$ 140,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 67,00</td>
-                <td>R$ 100,00</td>
-                <td>R$ 500,00</td>
-            </tr>
-            <tr>
-                <td class="total">Total</td>
-                <td>R$ 1121,00</td>
-                <td>R$ 1303,00</td>
-                <td>R$ 1247,00</td>
-                <td>R$ 1269,00</td>
-                <td>R$ 1156,00</td>
-                <td>R$ 1151,00</td>
-                <td>R$ 1142,00</td>
-                <td>R$ 2198,00</td>
-            </tr>
-            
-        </table>
-       
-    </div>
+            <c:forEach items="${saidas}" var="saida">
+                <tr>                        
+                    <th>Período</th>
+                    <th>Fornecedor</th>
+                    <th>Água/Luz</th>
+                    <th>Telefone</th>  
+                    <th>Combustivel</th>
+                    <th>Tarifas bancárias</th>  
+                    <th>Materiais de consumo</th> 
+                    <th>Equipamentos</th>  
+                    <th>Impostos</th>
+                    <th>Total</th> 
+                </tr>
+                <tr>
+                    <td>De ${saida.getDateFormat(saida.dataInicial)} a ${saida.getDateFormat(saida.dataFinal)}</td>
+                    <td>R$ ${saida.fornecedor}</td>
+                    <td>R$ ${saida.aguaELuz}</td>
+                    <td>R$ ${saida.telefone}</td>
+                    <td>R$ ${saida.combustivel}</td>
+                    <td>R$ ${saida.banco}</td>
+                    <td>R$ ${saida.materiaisConsumo}</td>
+                    <td>R$ ${saida.equipamentos}</td>
+                    <td>R$ ${saida.impostos}</td>
+                    <td>R$ ${saida.total()}</td>
+                    
+                </tr>  
+            </c:forEach>    
+        </table>           
+        
 </div>
 

@@ -80,7 +80,7 @@ price = {
         
         if ( radio1.prop("checked")){
             
-            newPrice += (newPrice * (36.25 / 100));
+            newPrice += (newPrice * (64.85 / 100));
             price.val(newPrice.toFixed(2));
             stock.val(newStock);
             modal.modal("hide");
@@ -92,7 +92,7 @@ price = {
             oldPrice = parseFloat(oldPrice);
             
             var previewPrice = ((oldStock * oldPrice) + newStock * new Price);
-            previewPrice += (previewPrice * (36.25 / 100));
+            previewPrice += (previewPrice * (64.85 / 100));
             price.val(previewPrice.toFixed(2));
             stock.val(oldStock + newStock);
             modal.modal("hide");

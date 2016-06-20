@@ -20,6 +20,8 @@
     <class>model.Venda</class>
     <class>model.Promocao</class>
     <class>model.Carrinho</class>
+    <class>model.Saida</class>
+    <class>model.Entrada</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/modasocial?zeroDateTimeBehavior=convertToNull"/>
